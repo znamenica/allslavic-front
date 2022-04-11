@@ -15,15 +15,37 @@ import LanguageIcon from '@mui/icons-material/Language';
 import I18n from "../i18n";
 import NavigationButton from "./ui/NavigationButton";
 import Config from "./utils/Config";
+import MenuIcon from '@mui/icons-material/Menu';
 
 const settings = ['Profile', 'Logout'];
 const languages = ['ru', 'en'];
+const pages = ["grammar", "dictionary", "tools", "slavic-circle"];
 
 const Navigation = () => {
+    const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(null);
     const [anchorElUser, setAnchorElUser] = React.useState<null | HTMLElement>(null);
     const [anchorElLanguage, setAnchorElLanguage] = React.useState<null | HTMLElement>(null);
     const { t } = useTranslation();
     const navigate = useNavigate();
+
+    const handleOpenNavMenu = (event: React.MouseEvent<HTMLElement>) => {
+        setAnchorElNav(event.currentTarget);
+    };
+
+    const onNavigate = (page: string) => {
+        switch (page) {
+            case "slavic-circle":
+                window.open(Config.get().CIRCLE_API, "_blank");
+                break;
+            default:
+                navigate(page);
+        }
+    }
+
+    const handleCloseNavMenu = (page: string) => {
+        onNavigate(page);
+        setAnchorElNav(null);
+    };
 
     const handleOpenUserMenu = (event: React.MouseEvent<HTMLElement>) => {
         setAnchorElUser(event.currentTarget);
@@ -62,25 +84,58 @@ const Navigation = () => {
                         {t('logo')}
                     </Typography>
                     <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
-                        <NavigationButton
-                            onNavigate={() => navigate("/grammar")}
-                            label={t('grammar')}
-                        />
-                        <NavigationButton
-                            onNavigate={() => navigate("/dictionary")}
-                            label={t('dictionary')}
-                        />
-                        <NavigationButton
-                            onNavigate={() => navigate("/tools")}
-                            label={t('tools')}
-                        />
-                        <NavigationButton
-                            onNavigate={() => window.open(Config.get().CIRCLE_API)}
-                            label={t('slavic-circle')}
-                        />
+                        {pages.map(page => (
+                            <NavigationButton
+                                onNavigate={() => onNavigate(page)}
+                                label={t(page)}
+                            />
+                        ))}
                     </Box>
-
-                    <Box sx={{ flexGrow: 0, marginRight: '10px' }}>
+                    <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
+                        <IconButton
+                            size="large"
+                            aria-label="account of current user"
+                            aria-controls="menu-appbar"
+                            aria-haspopup="true"
+                            onClick={handleOpenNavMenu}
+                            color="inherit"
+                        >
+                            <MenuIcon />
+                        </IconButton>
+                        <Menu
+                            id="menu-appbar"
+                            anchorEl={anchorElNav}
+                            anchorOrigin={{
+                                vertical: 'bottom',
+                                horizontal: 'left',
+                            }}
+                            keepMounted
+                            transformOrigin={{
+                                vertical: 'top',
+                                horizontal: 'left',
+                            }}
+                            open={Boolean(anchorElNav)}
+                            onClose={handleCloseNavMenu}
+                            sx={{
+                                display: { xs: 'block', md: 'none' },
+                            }}
+                        >
+                            {pages.map((page) => (
+                                <MenuItem key={page} onClick={() => handleCloseNavMenu(page)}>
+                                    <Typography textAlign="center">{t(page)}</Typography>
+                                </MenuItem>
+                            ))}
+                        </Menu>
+                    </Box>
+                    <Typography
+                        variant="h6"
+                        noWrap
+                        component="div"
+                        sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}
+                    >
+                        {t('logo')}
+                    </Typography>
+                    <Box sx={{ flexGrow: 0, marginRight: '10px', xs: 'none', md: 'flex' }}>
                         <Tooltip title="Change language">
                             <IconButton onClick={handleOpenLanguageMenu} sx={{ p: 0 }}>
                                 <Typography
@@ -116,7 +171,6 @@ const Navigation = () => {
                             ))}
                         </Menu>
                     </Box>
-
                     <Box sx={{ flexGrow: 0 }}>
                         <Tooltip title="Open settings">
                             <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>

@@ -1,5 +1,3 @@
-import ConfigObject from "../../Config.json";
-
 export interface IConfig {
     CIRCLE_API: string;
 }
@@ -7,8 +5,9 @@ export interface IConfig {
 export default class Config {
     static CIRCLE_API: string;
 
-    static init() {
-        return Promise.resolve(ConfigObject);
+    static async init() {
+        const res = await window.fetch("/Config.json");
+        return res.json();
     }
 
     static set(config: any) {
