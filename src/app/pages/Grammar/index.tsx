@@ -4,6 +4,7 @@ import {Tab, Tabs} from "@mui/material";
 import Typography from "@mui/material/Typography";
 import {useTranslation} from "react-i18next";
 import Alphabet from "../../components/grammar/Alphabet";
+import {Helmet} from "react-helmet";
 
 interface TabPanelProps {
   children?: React.ReactNode;
@@ -49,6 +50,10 @@ const Grammar = () => {
       <Box
           sx={{ marginTop: 10, flexGrow: 1, bgcolor: 'background.paper', display: 'flex' }}
       >
+        <Helmet>
+          <title>{t('grammar')}</title>
+          <meta name={t('grammar')} content="Грамматика межславянского языка" />
+        </Helmet>
         <Tabs
             orientation="vertical"
             variant="scrollable"

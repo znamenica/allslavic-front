@@ -2,17 +2,23 @@ import React from "react";
 import Typography from "@mui/material/Typography";
 import {useTranslation} from "react-i18next";
 import {List, ListItem, ListItemText} from "@mui/material";
+import {Helmet} from "react-helmet";
 
 const Home = () => {
     const { t } = useTranslation();
+    const desc = "Межславянский портал предоставляет ресурсы, посвященные межславянскому языку. В данный момент основные разделы разрабатываются.";
     return (
       <div style={{ display: 'flex', height: '100%' }}>
+          <Helmet>
+              <title>{t('logo')}</title>
+              <meta name={t('logo')} content={desc} />
+          </Helmet>
         <div style={{ flexGrow: 1 }}>
           <Typography variant="h3" gutterBottom component="div">
             {t('logo')}
           </Typography>
             <Typography variant="body1" gutterBottom component="div">
-                Межславянский портал предоставляет ресурсы, посвященные межславянскому языку. В данный момент основные разделы разрабатываются.
+                {desc}
             </Typography>
             <Typography variant="body1">
                 Цели межславянского языка:

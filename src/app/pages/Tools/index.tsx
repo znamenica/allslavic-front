@@ -6,6 +6,7 @@ import {TextField} from "@mui/material";
 import Button from "@mui/material/Button";
 import {useState} from "react";
 import {transcribe} from "../../utils/transcribers";
+import {Helmet} from "react-helmet";
 
 const Tools = () => {
     const { t } = useTranslation();
@@ -20,6 +21,10 @@ const Tools = () => {
     };
     return (
         <div style={{ display: 'flex', height: '100%' }}>
+            <Helmet>
+                <title>Транскрибатор межславянского языка</title>
+                <meta name="Транскрибатор межславянского языка" content="Перевод с кириллицы на латиницу межславянского языка" />
+            </Helmet>
             <div style={{ flexGrow: 1 }}>
                 <Typography variant="h3" gutterBottom component="div">
                     {t('tools')}

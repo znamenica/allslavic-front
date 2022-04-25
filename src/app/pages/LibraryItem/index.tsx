@@ -5,6 +5,7 @@ import {getLibraryItem} from "../../store/library";
 import {useNavigate, useParams} from "react-router-dom";
 import {useAppDispatch, useAppSelector} from "../../hooks";
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
+import {Helmet} from "react-helmet";
 
 const LibraryItem = () => {
     const params = useParams();
@@ -18,6 +19,10 @@ const LibraryItem = () => {
     }, [dispatch, params]);
     return item ? (
         <Box sx={{ marginTop: 1 }}>
+            <Helmet>
+                <title>Библиотека переводов</title>
+                <meta name="Библиотека переводов" content="Тексты на межславянском языке" />
+            </Helmet>
             <Typography
                 variant="body2"
                 gutterBottom

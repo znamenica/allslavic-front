@@ -11,6 +11,7 @@ import {currentPageItemsSelector, getLibraryItems, setPage, totalPageSelector} f
 import {LibraryType} from "../../api/library";
 import {useAppDispatch, useAppSelector} from "../../hooks";
 import {useNavigate} from "react-router-dom";
+import {Helmet} from "react-helmet";
 
 const StoryAvatar = ({ value }: { value: LibraryType }) => {
     switch (value) {
@@ -54,6 +55,10 @@ const Library = () => {
     const getOutlined = (value: LibraryType) => itemTypes.includes(value) ? "filled" : "outlined";
     return (
         <Box>
+            <Helmet>
+                <title>Библиотека переводов</title>
+                <meta name="Библиотека переводов" content="Тексты на межславянском языке" />
+            </Helmet>
             <Typography variant="h3" gutterBottom component="div">
                 Библиотека переводов
             </Typography>
@@ -80,6 +85,11 @@ const Library = () => {
                     label="Новости"
                     variant={getOutlined(LibraryType.NEWS)}
                     onClick={() => onChipClick(LibraryType.NEWS)}
+                />
+                <Chip
+                    label="Обучение"
+                    variant={getOutlined(LibraryType.STUDYING)}
+                    onClick={() => onChipClick(LibraryType.STUDYING)}
                 />
             </Box>
             <Box>
