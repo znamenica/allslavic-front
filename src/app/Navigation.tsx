@@ -19,7 +19,7 @@ import MenuIcon from '@mui/icons-material/Menu';
 
 const settings = ['Profile', 'Logout'];
 const languages = ['ru', 'en'];
-const pages = ["grammar", "dictionary", "tools", "slavic-circle"];
+const pages = ["grammar", "dictionary", "library", "tools", "slavic-circle"];
 
 const Navigation = () => {
     const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(null);
@@ -35,7 +35,7 @@ const Navigation = () => {
     const onNavigate = (page: string) => {
         switch (page) {
             case "slavic-circle":
-                window.open(Config.get().CIRCLE_API, "_blank");
+                window.open(Config.get().CIRCLE_API);
                 break;
             default:
                 navigate(page);

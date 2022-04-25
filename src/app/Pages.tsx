@@ -9,6 +9,8 @@ import Home from "./pages/Home";
 import Tools from "./pages/Tools";
 import Dictionary from "./pages/Dictionary";
 import Grammar from "./pages/Grammar";
+import Library from "./pages/Library";
+import LibraryItem from "./pages/LibraryItem";
 
 const Pages = () => {
     return (
@@ -20,6 +22,8 @@ const Pages = () => {
                     <Route path="/tools" element={<Tools />} />
                     <Route path="/grammar" element={<Grammar />} />
                     <Route path="/dictionary" element={<Dictionary />} />
+                    <Route path="/library/:id" element={<LibraryItem />} />
+                    <Route path="/library" element={<Library />} />
                 </Route>
             </Routes>
         </>

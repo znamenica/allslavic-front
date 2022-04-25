@@ -3,6 +3,7 @@ import Box from "@mui/material/Box";
 import {Tab, Tabs} from "@mui/material";
 import Typography from "@mui/material/Typography";
 import {useTranslation} from "react-i18next";
+import Alphabet from "../../components/grammar/Alphabet";
 
 interface TabPanelProps {
   children?: React.ReactNode;
@@ -23,7 +24,7 @@ function TabPanel(props: TabPanelProps) {
       >
         {value === index && (
             <Box sx={{ p: 3 }}>
-              <Typography>{children}</Typography>
+              {children}
             </Box>
         )}
       </div>
@@ -68,7 +69,11 @@ const Grammar = () => {
           {t('phonetics')}
         </TabPanel>
         <TabPanel value={value} index={1}>
-          {t('orthography')}
+          <Typography>
+            {t('orthography')}
+          </Typography>
+
+          <Alphabet />
         </TabPanel>
         <TabPanel value={value} index={2}>
           {t('nouns')}
