@@ -17,7 +17,7 @@ import NavigationButton from "./ui/NavigationButton";
 import Config from "./utils/Config";
 import MenuIcon from '@mui/icons-material/Menu';
 
-const settings = ['Profile', 'Logout'];
+const settings = ['profile', 'about'];
 const languages = ['ru', 'en'];
 const pages = ["grammar", "dictionary", "library", "tools", "slavic-circle"];
 
@@ -51,7 +51,8 @@ const Navigation = () => {
         setAnchorElUser(event.currentTarget);
     };
 
-    const handleCloseUserMenu = () => {
+    const handleCloseUserMenu = (setting: string) => {
+        onNavigate(setting);
         setAnchorElUser(null);
     };
 
@@ -174,7 +175,7 @@ const Navigation = () => {
                     <Box sx={{ flexGrow: 0 }}>
                         <Tooltip title="Open settings">
                             <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                                <Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg" />
+                                <Avatar alt="User" src="/static/images/avatar/2.jpg" />
                             </IconButton>
                         </Tooltip>
                         <Menu
@@ -194,8 +195,8 @@ const Navigation = () => {
                             onClose={handleCloseUserMenu}
                         >
                             {settings.map((setting) => (
-                                <MenuItem key={setting} onClick={handleCloseUserMenu}>
-                                    <Typography textAlign="center">{setting}</Typography>
+                                <MenuItem key={setting} onClick={() => handleCloseUserMenu(setting)}>
+                                    <Typography textAlign="center">{t(setting)}</Typography>
                                 </MenuItem>
                             ))}
                         </Menu>

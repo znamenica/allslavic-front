@@ -6,8 +6,11 @@ import {useNavigate, useParams} from "react-router-dom";
 import {useAppDispatch, useAppSelector} from "../../hooks";
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import {Helmet} from "react-helmet";
+import {commonTranscribe} from "../../utils/transcribers";
+import {Preferences} from "../../common/constants";
 
 const LibraryItem = () => {
+    const transcription = localStorage.getItem(Preferences.transcription)
     const params = useParams();
     const navigate = useNavigate();
     const dispatch = useAppDispatch();
@@ -33,10 +36,14 @@ const LibraryItem = () => {
                 <ArrowBackIcon/>
             </Typography>
             <Typography variant="h3" gutterBottom component="div">
-                {item.title}
+                {transcription
+                    ? commonTranscribe(item.title, transcription)
+                    : item.title}
             </Typography>
             <Typography variant="body1" gutterBottom component="div" sx={{ whiteSpace: "pre-wrap" }}>
-                {item.value}
+                {transcription
+                    ? commonTranscribe(item.value, transcription)
+                    : item.value}
             </Typography>
         </Box>
     ) : (

@@ -16,5 +16,8 @@
   "verbs": "Verbs",
   "numerals": "Numerals",
   "adjectives": "Adjectives",
-  "pronouns": "Pronouns"
+  "pronouns": "Pronouns",
+  "library": "Translation storage",
+  "profile": "Profile",
+  "about": "About site"
 }

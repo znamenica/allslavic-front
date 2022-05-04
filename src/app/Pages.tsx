@@ -11,6 +11,8 @@ import Dictionary from "./pages/Dictionary";
 import Grammar from "./pages/Grammar";
 import Library from "./pages/Library";
 import LibraryItem from "./pages/LibraryItem";
+import Profile from "./pages/Profile";
+import About from "./pages/About";
 
 const Pages = () => {
     return (
@@ -24,6 +26,8 @@ const Pages = () => {
                     <Route path="/dictionary" element={<Dictionary />} />
                     <Route path="/library/:id" element={<LibraryItem />} />
                     <Route path="/library" element={<Library />} />
+                    <Route path="/profile" element={<Profile />} />
+                    <Route path="/about" element={<About />} />
                 </Route>
             </Routes>
         </>

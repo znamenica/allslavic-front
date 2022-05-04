@@ -12,6 +12,8 @@ import {LibraryType} from "../../api/library";
 import {useAppDispatch, useAppSelector} from "../../hooks";
 import {useNavigate} from "react-router-dom";
 import {Helmet} from "react-helmet";
+import {Preferences} from "../../common/constants";
+import {commonTranscribe} from "../../utils/transcribers";
 
 const StoryAvatar = ({ value }: { value: LibraryType }) => {
     switch (value) {
@@ -31,6 +33,7 @@ const StoryAvatar = ({ value }: { value: LibraryType }) => {
 };
 
 const Library = () => {
+    const transcription = localStorage.getItem(Preferences.transcription)
     const [itemTypes, setItemTypes] = useState<LibraryType[]>([]);
     const navigate = useNavigate();
     const items = useAppSelector(currentPageItemsSelector);
@@ -105,10 +108,16 @@ const Library = () => {
                                 <StoryAvatar value={item.type} />
                             </ListItemAvatar>
                             <ListItemText
-                                primary={item.title}
+                                primary={
+                                    transcription
+                                        ? commonTranscribe(item.title, transcription)
+                                        : item.title
+                                }
                                 secondary={
                                     <React.Fragment>
-                                        {item.value.slice(0, 200)}
+                                        {transcription
+                                            ? commonTranscribe(item.value.slice(0, 200), transcription)
+                                            : item.value.slice(0, 200)}
                                     </React.Fragment>
                                 }
                             />
