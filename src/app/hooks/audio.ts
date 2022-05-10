@@ -5,8 +5,8 @@ export const useMultiAudio = (urls: Array<{ key: string, url: string }>): [any[]
         urls.map(url => {
             return {
                 ...url,
-                audio: new Audio(url.url),
-            }
+                audio: new Audio(),
+            };
         }),
     )
 
@@ -38,6 +38,8 @@ export const useMultiAudio = (urls: Array<{ key: string, url: string }>): [any[]
     useEffect(() => {
         sources.forEach((source, i) => {
             if (players[i].playing) {
+                source.audio.src = source.url;
+                source.audio.load();
                 source.audio.play();
             } else {
                 source.audio.pause();

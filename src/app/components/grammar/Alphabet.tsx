@@ -1,4 +1,4 @@
-import React from "react";
+import React, {memo} from "react";
 import {Card, CardContent} from "@mui/material";
 import Typography from "@mui/material/Typography";
 import PlayArrowIcon from '@mui/icons-material/PlayArrow';
@@ -38,16 +38,17 @@ const rows: any[] = [
     { value: 'ц', latin: 'c', audio: 'c', alphabets: [ORTHOGRAPHY.CYR, ORTHOGRAPHY.CYR_SCI, ORTHOGRAPHY.CYR_PHON, ORTHOGRAPHY.LAT, ORTHOGRAPHY.LAT_PHON] },
     { value: 'ч', latin: 'č', audio: 'ch', alphabets: [ORTHOGRAPHY.CYR, ORTHOGRAPHY.CYR_SCI, ORTHOGRAPHY.CYR_PHON, ORTHOGRAPHY.LAT, ORTHOGRAPHY.LAT_PHON]  },
     { value: 'ш', latin: 'š', audio: 'sh', alphabets: [ORTHOGRAPHY.CYR, ORTHOGRAPHY.CYR_SCI, ORTHOGRAPHY.CYR_PHON, ORTHOGRAPHY.LAT, ORTHOGRAPHY.LAT_PHON]  },
-    { value: 'щ', latin: 'šč', audio: 'shch', alphabets: [ORTHOGRAPHY.CYR, ORTHOGRAPHY.CYR_SCI, ORTHOGRAPHY.CYR_PHON, ORTHOGRAPHY.LAT, ORTHOGRAPHY.LAT_PHON]  },
-    { value: 'ъ', latin: '-', audio: 'er', alphabets: [ORTHOGRAPHY.CYR, ORTHOGRAPHY.CYR_SCI, ORTHOGRAPHY.CYR_PHON, ORTHOGRAPHY.LAT, ORTHOGRAPHY.LAT_PHON]  },
+    { value: 'щ', latin: 'šč', audio: 'shch', alphabets: [ORTHOGRAPHY.CYR_SCI, ORTHOGRAPHY.CYR_PHON, ORTHOGRAPHY.LAT_PHON]  },
+    { value: 'ъ', latin: '-', audio: 'er', alphabets: [ORTHOGRAPHY.CYR_SCI, ORTHOGRAPHY.CYR_PHON, ORTHOGRAPHY.LAT_PHON]  },
     { value: 'ы', latin: 'y', audio: 'y', alphabets: [ORTHOGRAPHY.CYR, ORTHOGRAPHY.CYR_SCI, ORTHOGRAPHY.CYR_PHON, ORTHOGRAPHY.LAT, ORTHOGRAPHY.LAT_PHON]  },
 ];
 
-const Alphabet = () => {
+const Alphabet = memo(() => {
     const urls = rows.map(f => f.audio && sounds[f.audio] ? { key: f.audio, url: sounds[f.audio] } : null);
     const validUrls = urls.filter(e => !!e) as Array<{ key: string, url: string }>;
     const transcription = localStorage.getItem(Preferences.transcription);
     const [players, toggle] = useMultiAudio(validUrls);
+    console.log(players);
     return (
         <div style={{ display: 'grid', gap: '10px', gridTemplate: 'repeat(5, 1fr) / repeat(5, 1fr)' }}>
             {rows
@@ -73,6 +74,6 @@ const Alphabet = () => {
             ))}
         </div>
     );
-};
+});
 
 export default Alphabet;
