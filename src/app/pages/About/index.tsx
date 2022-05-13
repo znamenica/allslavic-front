@@ -14,6 +14,22 @@ const About = () => {
               О портале
           </Typography>
           <Typography variant="subtitle1" gutterBottom component="div">
+              Версия 0.0.4 (13.05.2022)
+          </Typography>
+          <Typography variant="body1" gutterBottom component="div">
+              - Добавлена клавиатура мс для виндовс<br/>
+              - Добавлен выбор целевой азбуки при использовании транскрибатора
+              - В инструменты вынесено скачивание клавиатуры
+              - Исправлены ошибки в аудио-таблице азбуки
+          </Typography>
+          <Typography variant="subtitle1" gutterBottom component="div">
+              Версия 0.0.3 (10.05.2022)
+          </Typography>
+          <Typography variant="body1" gutterBottom component="div">
+              - Добавлены аудио-файлы для прослушивания в разделе азбуки грамматики<br/>
+              - Добавлены некоторые фото-материалы в раздел словаря
+          </Typography>
+          <Typography variant="subtitle1" gutterBottom component="div">
               Версия 0.0.2 (04.05.2022)
           </Typography>
           <Typography variant="body1" gutterBottom component="div">

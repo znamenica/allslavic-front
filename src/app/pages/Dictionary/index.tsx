@@ -6,6 +6,10 @@ import bodyPartsIcon from "../../assets/images/body-parts.jpeg";
 import emotionsIcon from "../../assets/images/emotions.jpeg";
 import housePartsIcon from "../../assets/images/house-parts.jpeg";
 import vegetablesIcon from "../../assets/images/vegetables.jpeg";
+import dishesIcon from "../../assets/images/dishes.png";
+import mebelIcon from "../../assets/images/mebel.png";
+import transportIcon from "../../assets/images/transport.png";
+import weatherIcon from "../../assets/images/weather.png";
 import AppBar from "@mui/material/AppBar";
 import IconButton from "@mui/material/IconButton";
 import {forwardRef, useState} from "react";
@@ -20,6 +24,10 @@ const itemData = [
     {img: emotionsIcon, title: "emotions"},
     {img: housePartsIcon, title: "house parts"},
     {img: vegetablesIcon, title: "vegetables"},
+    {img: dishesIcon, title: "dishes"},
+    {img: mebelIcon, title: "mebel"},
+    {img: transportIcon, title: "transport"},
+    {img: weatherIcon, title: "weather"},
 ];
 
 const Transition = forwardRef(function Transition(

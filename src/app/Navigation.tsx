@@ -80,7 +80,7 @@ const Navigation = () => {
                         onClick={() => {
                             navigate("/");
                         }}
-                        sx={{ mr: 2, display: { xs: 'none', md: 'flex' }, cursor: "pointer" }}
+                        sx={{ mr: 2, whiteSpace: 'pre-wrap', display: { xs: 'none', md: 'flex' }, cursor: "pointer" }}
                     >
                         {t('logo')}
                     </Typography>

@@ -3,6 +3,7 @@ import Typography from "@mui/material/Typography";
 import {useTranslation} from "react-i18next";
 import {List, ListItem, ListItemText} from "@mui/material";
 import {Helmet} from "react-helmet";
+import Keyboards from "../../components/tools/Keyboards";
 
 const Home = () => {
     const { t } = useTranslation();
@@ -44,6 +45,7 @@ const Home = () => {
                     />
                 </ListItem>
             </List>
+            <Keyboards />
         </div>
       </div>
     );

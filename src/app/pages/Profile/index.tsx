@@ -47,7 +47,7 @@ const Profile = () => {
                     <FormControlLabel value={ORTHOGRAPHY.CYR_SCI} control={<Radio />} label="Научна кириллица" />
                     <FormControlLabel value={ORTHOGRAPHY.CYR_PHON} control={<Radio />} label="Фонетична кириллица" />
                     <FormControlLabel value={ORTHOGRAPHY.LAT} control={<Radio />} label="Latinica" />
-                    <FormControlLabel value={ORTHOGRAPHY.LAT_PHON} control={<Radio />} label="Phonetična latinica" />
+                    <FormControlLabel value={ORTHOGRAPHY.LAT_PHON} control={<Radio />} label="Fonetična latinica" />
                 </RadioGroup>
             </FormControl>
         </Box>
