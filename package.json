@@ -1,58 +1,51 @@
 {
   "name": "allslavic-front",
   "version": "0.1.0",
-  "private": true,
+  "license": "MIT",
+  "scripts": {
+    "start:tsc": "tsc -b -w --preserveWatchOutput",
+    "start": "concurrently \"npm run start:tsc\" \"razzle start\"",
+    "build": "tsc -b && razzle build",
+    "test": "razzle test --env=jsdom",
+    "start:prod": "NODE_ENV=production node build/server.js"
+  },
   "dependencies": {
     "@emotion/react": "^11.9.0",
     "@emotion/styled": "^11.8.1",
-    "@mui/icons-material": "^5.6.0",
-    "@mui/material": "^5.6.0",
+    "@mui/icons-material": "^5.6.2",
+    "@mui/material": "^5.7.0",
     "@reduxjs/toolkit": "^1.8.1",
-    "@testing-library/jest-dom": "^5.16.4",
-    "@testing-library/react": "^12.1.4",
-    "@testing-library/user-event": "^13.5.0",
-    "@types/jest": "^27.4.1",
-    "@types/node": "^16.11.26",
-    "@types/react": "^17.0.44",
-    "@types/react-dom": "^17.0.15",
-    "i18next": "^21.6.14",
+    "babel-preset-razzle": "^4.2.16",
+    "dotenv": "^16.0.1",
+    "express": "^4.17.1",
+    "file-loader": "^6.2.0",
+    "i18next": "^21.8.2",
     "i18next-browser-languagedetector": "^6.1.4",
     "i18next-http-backend": "^1.4.0",
-    "react": "^18.0.0",
-    "react-dom": "^18.0.0",
+    "razzle-dev-utils": "^4.2.16",
+    "react": "^18.1.0",
+    "react-dom": "^18.1.0",
     "react-helmet": "^6.1.0",
-    "react-i18next": "^11.16.2",
+    "react-i18next": "^11.16.9",
     "react-redux": "^8.0.1",
     "react-router-dom": "^6.3.0",
-    "react-scripts": "5.0.0",
-    "typescript": "^4.6.3",
-    "web-vitals": "^2.1.4"
-  },
-  "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
-    "test": "react-scripts test",
-    "eject": "react-scripts eject"
-  },
-  "eslintConfig": {
-    "extends": [
-      "react-app",
-      "react-app/jest"
-    ]
-  },
-  "browserslist": {
-    "production": [
-      ">0.2%",
-      "not dead",
-      "not op_mini all"
-    ],
-    "development": [
-      "last 1 chrome version",
-      "last 1 firefox version",
-      "last 1 safari version"
-    ]
+    "url": "^0.11.0"
   },
   "devDependencies": {
-    "@types/react-helmet": "^6.1.5"
+    "@types/express": "^4.17.6",
+    "@types/node": "^14.18.18",
+    "@types/react": "^18.0.9",
+    "@types/react-dom": "^18.0.4",
+    "@types/react-helmet": "^6.1.5",
+    "@types/react-router-dom": "^5.3.3",
+    "@types/webpack-env": "^1.16.4",
+    "concurrently": "^5.3.0",
+    "cross-env": "^7.0.3",
+    "html-webpack-plugin": "^5.5.0",
+    "mini-css-extract-plugin": "^1.6.2",
+    "razzle": "^4.2.16",
+    "typescript": "^4.0.3",
+    "webpack": "^5.72.1",
+    "webpack-dev-server": "^4.9.0"
   }
 }
