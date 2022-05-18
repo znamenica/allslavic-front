@@ -1,16 +1,14 @@
-Unit]
+[Unit]
 Description=AllSlavic
 
 [Service]
-Environment="NODE_ENV=production&PORT=3001"
-ExecStart=node /var/www/allslavic-front-2/server.js
+ExecStart=node /home/george/Documents/allslavic-front/build/server.js
 Restart=always
-User=nobody
+User=www-data
 # Note Debian/Ubuntu uses 'nogroup', RHEL/Fedora uses 'nobody'
 Group=nogroup
-Environment=PATH=/usr/bin:/usr/local/bin
-Environment=NODE_ENV=production
-WorkingDirectory=/var/www/allslavic-front-2
+Environment=PATH="/usr/bin:/usr/local/bin"
+WorkingDirectory=/home/george/Documents/allslavic-front/build
 
 [Install]
 WantedBy=multi-user.target
