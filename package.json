@@ -17,6 +17,7 @@
     "@reduxjs/toolkit": "^1.8.1",
     "babel-preset-razzle": "^4.2.16",
     "dotenv": "^16.0.1",
+    "ejs": "^3.1.8",
     "express": "^4.17.1",
     "file-loader": "^6.2.0",
     "i18next": "^21.8.2",

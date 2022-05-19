@@ -2,13 +2,13 @@
 Description=AllSlavic
 
 [Service]
-ExecStart=node /home/george/Documents/allslavic-front/build/server.js
+ExecStart=node /var/www/allslavic/server.js
 Restart=always
 User=www-data
 # Note Debian/Ubuntu uses 'nogroup', RHEL/Fedora uses 'nobody'
 Group=nogroup
 Environment=PATH="/usr/bin:/usr/local/bin"
-WorkingDirectory=/home/george/Documents/allslavic-front/build
+WorkingDirectory=/var/www/allslavic
 
 [Install]
 WantedBy=multi-user.target
