@@ -14,6 +14,14 @@ const About = () => {
               О портале
           </Typography>
           <Typography variant="subtitle1" gutterBottom component="div">
+              Версия 0.1.0 (20.05.2022)
+          </Typography>
+          <Typography variant="body1" gutterBottom component="div">
+              - Переработан движок портала для работы SEO<br/>
+              - Добавлен серверный рендеринг мета-тегов для работы в поисковиках<br/>
+              - Логика работы приложения изменена минимально
+          </Typography>
+          <Typography variant="subtitle1" gutterBottom component="div">
               Версия 0.0.4 (13.05.2022)
           </Typography>
           <Typography variant="body1" gutterBottom component="div">
