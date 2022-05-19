@@ -5,6 +5,7 @@ import {Provider} from "react-redux";
 import { StaticRouter } from 'react-router-dom/server';
 import App from '../common/app/App';
 import configureAppStore from "../common/store";
+import Helmet from "react-helmet";
 
 let assets: any;
 
@@ -41,16 +42,15 @@ export const renderApp = (req: express.Request, res: express.Response) => {
             </StaticRouter>
         </Provider>
     );
+    const helmet = Helmet.renderStatic();
 
     const html =
             // prettier-ignore
             `<!doctype html>
     <html lang="">
     <head>
-        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-        <meta charSet='utf-8' />
-        <title>Welcome to Razzle</title>
-        <meta name="viewport" content="width=device-width, initial-scale=1">
+        ${helmet.title.toString()}
+        ${helmet.meta.toString()}
         ${cssLinksFromAssets(assets, 'client')}
     </head>
     <body>
