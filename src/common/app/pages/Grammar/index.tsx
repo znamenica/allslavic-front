@@ -70,10 +70,12 @@ const Grammar = () => {
       <Box
           sx={{ marginTop: 10, flexGrow: 1, bgcolor: 'background.paper', display: 'flex' }}
       >
-        <Helmet>
-          <title>{t('grammar')}</title>
-          <meta name={t('grammar')} content="Грамматика межславянского языка" />
-        </Helmet>
+        <Helmet
+          title={t('grammar')}
+          meta={[
+            { name: t('grammar'), content: "Грамматика межславянского языка"}
+          ]}
+        />
         <Tabs
             orientation="vertical"
             variant="scrollable"

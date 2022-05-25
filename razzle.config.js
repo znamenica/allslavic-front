@@ -1,4 +1,5 @@
 const path = require("path");
+const webpack = require("webpack");
 
 module.exports = {
   options: {
@@ -20,6 +21,13 @@ module.exports = {
         )                                    // __webpack_require__(...)(mod)
         // we set `mod = 'ejs'`
       )
+    }
+    if (opts.env.target === 'web') {
+      config.plugins.push(
+        new opts.webpackObject.ProvidePlugin({
+          process: 'process/browser',
+        }),
+      );
     }
     return config;
   }
