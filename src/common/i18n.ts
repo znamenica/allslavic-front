@@ -8,8 +8,8 @@ const options = {
     supportedLngs: ['en', 'ru'],
     // load: 'languageOnly',
     // have a common namespace used around the full app
-    ns: ['translations'],
-    defaultNS: 'translations',
+    ns: ['translation'],
+    defaultNS: 'translation',
     // initImmediate: false,
     saveMissing: true,
     // useSuspense: false,
