@@ -5,13 +5,14 @@ import LanguageDetector from 'i18next-browser-languagedetector';
 
 const options = {
     fallbackLng: 'ru',
-    // supportedLngs: ['en', 'ru'],
+    supportedLngs: ['en', 'ru'],
     // load: 'languageOnly',
     // have a common namespace used around the full app
-    // ns: ['translations'],
-    // defaultNS: 'translations',
-    initImmediate: false,
+    ns: ['translations'],
+    defaultNS: 'translations',
+    // initImmediate: false,
     saveMissing: true,
+    // useSuspense: false,
     debug: true,
     interpolation: {
         escapeValue: false, // not needed for react!!

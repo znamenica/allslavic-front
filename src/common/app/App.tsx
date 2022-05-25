@@ -16,6 +16,7 @@ function App() {
           console.log("success", config)
           Config.set(config);
       }).catch(() => {
+
           console.log("error");
       });
     }, []);

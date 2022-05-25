@@ -1,6 +1,6 @@
 import express from 'express';
-import React, {Suspense} from 'react';
-import { renderToString } from 'react-dom/server';
+import React, {Suspense, useTransition} from 'react';
+import {renderToPipeableStream, renderToString} from 'react-dom/server';
 import {Provider} from "react-redux";
 import { StaticRouter } from 'react-router-dom/server';
 import App from '../common/app/App';
@@ -13,8 +13,15 @@ import i18nextMiddleware from 'i18next-http-middleware';
 import * as path from "path";
 import * as fs from "fs";
 import * as process from "process";
+import { renderToStream } from 'react-streaming/server'
 
 let assets: any;
+
+const index = express();
+
+const appDirectory = fs.realpathSync(process.cwd());
+const resolveApp = (relativePath: string) => path.resolve(appDirectory, relativePath);
+const appSrc = resolveApp('src');
 
 const syncLoadAssets = () => {
     assets = require(process.env.RAZZLE_ASSETS_MANIFEST!);
@@ -35,28 +42,79 @@ const jsScriptTagsFromAssets = (assets: any, entrypoint: any, extra = '') => {
         ).join('') : '' : '';
 };
 
-interface Request extends express.Request {
+interface Request {
     i18n: any;
 }
+console.log(index);
 
-export const renderApp = (req: Request, res: express.Response) => {
+export const renderApp = (req: any, res: any) => {
     // Compile an initial state
     const preloadedState = {  };
 
     // Create a new Redux store instance
     const store = configureAppStore(preloadedState);
 
-    const markup = renderToString(
-        <Suspense fallback={"Загрузка"}>
-            <I18nextProvider i18n={req.i18n}>
+    const BaseApp = () => {
+        // const [isPending] = useTransition();
+        // return isPending ? <>loading</> : (
+            return (<I18nextProvider i18n={req.i18n}>
                 <Provider store={store}>
                     <StaticRouter location={req.url}>
                         <App />
                     </StaticRouter>
                 </Provider>
             </I18nextProvider>
+        );
+    }
+
+    // try {
+    //     const a = await renderToStream( <BaseApp />, {userAgent: "Mozilla 5.0"})
+    //     console.log(a);
+        // ✅ Page shell succesfully rendered and is ready in the stream buffer.
+    // } catch(err) {
+    //     console.log(err);
+        // ❌ Something went wrong while rendering the page shell.
+    // }
+
+    const markup = renderToString(
+        <Suspense fallback={"Загрузка"}>
+            <BaseApp />
         </Suspense>
     );
+    // let didError = false;
+    // const stream = renderToPipeableStream(
+    //     <BaseApp />,
+    //     {
+    //         onShellReady() {
+    //             // The content above all Suspense boundaries is ready.
+    //             // If something errored before we started streaming, we set the error code appropriately.
+    //             res.statusCode = didError ? 500 : 200;
+    //             res.setHeader('Content-type', 'text/html');
+    //             stream.pipe(res);
+    //         },
+    //         onShellError(error) {
+    //             // Something errored before we could complete the shell so we emit an alternative shell.
+    //             res.statusCode = 500;
+    //             res.send(
+    //                 '<!doctype html><p>Loading...</p><script src="clientrender.js"></script>'
+    //             );
+    //         },
+    //         onAllReady() {
+    //             // If you don't want streaming, use this instead of onShellReady.
+    //             // This will fire after the entire page content is ready.
+    //             // You can use this for crawlers or static generation.
+    //
+    //             // res.statusCode = didError ? 500 : 200;
+    //             // res.setHeader('Content-type', 'text/html');
+    //             // stream.pipe(res);
+    //         },
+    //         onError(err) {
+    //             didError = true;
+    //             console.error(err);
+    //         },
+    //     }
+    // );
+    // setTimeout(() => stream.abort(), 2000);
     const helmet = Helmet.renderStatic();
     console.log(helmet.title.toString(), helmet.meta.toString());
     const initialLanguage = req.i18n?.languages && req.i18n?.languages[0];
@@ -95,41 +153,38 @@ export const renderApp = (req: Request, res: express.Response) => {
     return { html, redirect: '' };
 };
 
-const index = express();
-
-const appDirectory = fs.realpathSync(process.cwd());
-const resolveApp = (relativePath: string) => path.resolve(appDirectory, relativePath);
-const appSrc = resolveApp('public');
-
 i18n
     .use(Backend)
     .use(i18nextMiddleware.LanguageDetector)
     .init(
         {
-            initImmediate: false,
+            // initImmediate: false,
             debug: false,
-            // preload: ['en', 'ru'],
-            // ns: ['translations'],
-            // defaultNS: 'translations',
+            preload: ['en', 'ru'],
+            ns: ['translations'],
+            defaultNS: 'translations',
             backend: {
-            //     loadPath: `${appSrc}/locales/{{lng}}/{{ns}}.json`,
-            //     addPath: `${appSrc}/locales/{{lng}}/{{ns}}.missing.json`,
+                loadPath: `${appSrc}/locales/{{lng}}/{{ns}}.json`,
+                addPath: `${appSrc}/locales/{{lng}}/{{ns}}.missing.json`,
             },
         },
         () => {
-            index.disable('x-powered-by')
-                .use(i18nextMiddleware.handle(i18n))
-                // .use('/locales', express.static(`${appSrc}/locales`))
+            index
+                .disable('x-powered-by')
                 .use(express.static(process.env.RAZZLE_PUBLIC_DIR!))
-                .get('/*', (req: express.Request, res: express.Response) => {
+                .use(i18nextMiddleware.handle(i18n))
+                .use('/locales', express.static(`${appSrc}/locales`))
+                .get('/*', (req: any, res: any) => {
                     console.log("Send");
-                    const {html = '', redirect = ''} = renderApp(req as Request, res);
-                    if (redirect) {
-                        res.redirect(redirect);
-                    } else {
-                        res.send(html);
-                    }
+                    const {html = '', redirect = ''} =
+                    renderApp(req as Request, res);
+                    res.status(200).send(html);
+                    // if (redirect) {
+                    //     res.redirect(redirect);
+                    // } else {
+                    //     res.status(200).send(html);
+                    // }
                 });
-        });
+        }).catch(e => console.log("Error: ", e));
 
 export default index;

@@ -23,62 +23,60 @@ const languages = ['ru', 'en'];
 const pages = ["grammar", "dictionary", "library", "tools", "slavic-circle"];
 
 const Navigation = () => {
-    // const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(null);
+    const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(null);
     const [showing, setShowing] = useState(false);
-    // const anchorElUser = useRef<any>(null);
-    // const anchorElLanguage = useRef<any>(null);
-    // const [elUser, setElUser] = useState<boolean|null>(null);
-    // const [elLanguage, setElLanguage] = useState<boolean|null>(null);
-    //
+    const anchorElUser = useRef<any>(null);
+    const anchorElLanguage = useRef<any>(null);
+    const [elUser, setElUser] = useState<boolean|null>(null);
+    const [elLanguage, setElLanguage] = useState<boolean|null>(null);
+
     const { t } = useTranslation();
     const navigate = useNavigate();
-    // const t = () => "asdasd";
-    // const navigate = () => {};
-    //
-    // const handleOpenNavMenu = (event: React.MouseEvent<HTMLElement>) => {
-    //     setAnchorElNav(event.currentTarget);
-    // };
-    //
-    // const onNavigate = (page: string) => {
-    //     switch (page) {
-    //         case "slavic-circle":
-    //             window.open(Config.get().CIRCLE_API);
-    //             break;
-    //         default:
-    //             navigate(page);
-    //     }
-    // }
-    //
+
+    const handleOpenNavMenu = (event: React.MouseEvent<HTMLElement>) => {
+        setAnchorElNav(event.currentTarget);
+    };
+
+    const onNavigate = (page: string) => {
+        switch (page) {
+            case "slavic-circle":
+                window.open(Config.get().CIRCLE_API);
+                break;
+            default:
+                navigate(page);
+        }
+    }
+
     useEffect(() => {
         setShowing(true);
     }, []);
-    //
-    // const handleCloseNavMenu = (page: string) => {
-    //     onNavigate(page);
-    //     setAnchorElNav(null);
-    // };
-    //
-    // const handleOpenUserMenu = (event: React.MouseEvent<HTMLElement>) => {
-    //     setElUser(true);
-    // };
-    //
-    // const handleCloseUserMenu = (setting: string) => {
-    //     onNavigate(setting);
-    //     setElUser(null);
-    // };
-    //
-    // const handleOpenLanguageMenu = (event: React.MouseEvent<HTMLElement>) => {
-    //     setElLanguage(true);
-    // };
-    //
-    // const handleCloseLanguageMenu = () => {
-    //     setElLanguage(null);
-    // };
-    //
-    // const onChangeLang = (lang: string) => {
-    //     handleCloseLanguageMenu();
-    //     I18n.changeLanguage(lang);
-    // };
+
+    const handleCloseNavMenu = (page: string) => {
+        onNavigate(page);
+        setAnchorElNav(null);
+    };
+
+    const handleOpenUserMenu = (event: React.MouseEvent<HTMLElement>) => {
+        setElUser(true);
+    };
+
+    const handleCloseUserMenu = (setting: string) => {
+        onNavigate(setting);
+        setElUser(null);
+    };
+
+    const handleOpenLanguageMenu = (event: React.MouseEvent<HTMLElement>) => {
+        setElLanguage(true);
+    };
+
+    const handleCloseLanguageMenu = () => {
+        setElLanguage(null);
+    };
+
+    const onChangeLang = (lang: string) => {
+        handleCloseLanguageMenu();
+        I18n.changeLanguage(lang);
+    };
 
     return showing ? (
         <AppBar position="static">
@@ -95,133 +93,133 @@ const Navigation = () => {
                     >
                         {t('logo')}
                     </Typography>
-            {/*        <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>*/}
-            {/*            {pages.map(page => (*/}
-            {/*                <NavigationButton*/}
-            {/*                    key={page}*/}
-            {/*                    onNavigate={() => onNavigate(page)}*/}
-            {/*                    label={t(page)}*/}
-            {/*                />*/}
-            {/*            ))}*/}
-            {/*        </Box>*/}
-            {/*        <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>*/}
-            {/*            <IconButton*/}
-            {/*                size="large"*/}
-            {/*                aria-label="account of current user"*/}
-            {/*                aria-controls="menu-appbar"*/}
-            {/*                aria-haspopup="true"*/}
-            {/*                onClick={handleOpenNavMenu}*/}
-            {/*                color="inherit"*/}
-            {/*            >*/}
-            {/*                <MenuIcon />*/}
-            {/*            </IconButton>*/}
-            {/*            <Menu*/}
-            {/*                id="menu-appbar"*/}
-            {/*                anchorEl={anchorElNav}*/}
-            {/*                anchorOrigin={{*/}
-            {/*                    vertical: 'bottom',*/}
-            {/*                    horizontal: 'left',*/}
-            {/*                }}*/}
-            {/*                keepMounted*/}
-            {/*                transformOrigin={{*/}
-            {/*                    vertical: 'top',*/}
-            {/*                    horizontal: 'left',*/}
-            {/*                }}*/}
-            {/*                open={Boolean(anchorElNav)}*/}
-            {/*                onClose={handleCloseNavMenu}*/}
-            {/*                sx={{*/}
-            {/*                    display: { xs: 'block', md: 'none' },*/}
-            {/*                }}*/}
-            {/*            >*/}
-            {/*                {pages.map((page) => (*/}
-            {/*                    <MenuItem key={page} onClick={() => handleCloseNavMenu(page)}>*/}
-            {/*                        <Typography textAlign="center">{t(page)}</Typography>*/}
-            {/*                    </MenuItem>*/}
-            {/*                ))}*/}
-            {/*            </Menu>*/}
-            {/*        </Box>*/}
-            {/*        <Typography*/}
-            {/*            variant="h6"*/}
-            {/*            noWrap*/}
-            {/*            component="div"*/}
-            {/*            sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}*/}
-            {/*        >*/}
-            {/*            {t('logo')}*/}
-            {/*        </Typography>*/}
-            {/*        <Box sx={{ flexGrow: 0, marginRight: '10px', xs: 'none', md: 'flex' }}>*/}
-            {/*            <Tooltip title="Change language">*/}
-            {/*                <IconButton*/}
-            {/*                    ref={anchorElLanguage}*/}
-            {/*                    onClick={handleOpenLanguageMenu}*/}
-            {/*                    sx={{ p: 0 }}*/}
-            {/*                >*/}
-            {/*                    <Typography*/}
-            {/*                        sx={{ marginRight: 1 }}*/}
-            {/*                        variant="body2"*/}
-            {/*                        color="white"*/}
-            {/*                        component="div"*/}
-            {/*                    >*/}
-            {/*                        {t(I18n.language)}*/}
-            {/*                    </Typography>*/}
-            {/*                    <LanguageIcon sx={{ color: 'white'}} />*/}
-            {/*                </IconButton>*/}
-            {/*            </Tooltip>*/}
-            {/*            <Menu*/}
-            {/*                sx={{ mt: '35px' }}*/}
-            {/*                id="menu-appbar"*/}
-            {/*                anchorEl={anchorElLanguage.current}*/}
-            {/*                anchorOrigin={{*/}
-            {/*                    vertical: 'top',*/}
-            {/*                    horizontal: 'right',*/}
-            {/*                }}*/}
-            {/*                keepMounted*/}
-            {/*                transformOrigin={{*/}
-            {/*                    vertical: 'top',*/}
-            {/*                    horizontal: 'right',*/}
-            {/*                }}*/}
-            {/*                open={Boolean(elLanguage)}*/}
-            {/*                onClose={handleCloseLanguageMenu}*/}
-            {/*            >*/}
-            {/*                {languages.map((lang) => (*/}
-            {/*                    <MenuItem key={lang} onClick={() => onChangeLang(lang)}>*/}
-            {/*                        <Typography textAlign="center">{t(lang)}</Typography>*/}
-            {/*                    </MenuItem>*/}
-            {/*                ))}*/}
-            {/*            </Menu>*/}
-            {/*        </Box>*/}
-            {/*        <Box sx={{ flexGrow: 0 }}>*/}
-            {/*            <Tooltip title="Open settings">*/}
-            {/*                <IconButton*/}
-            {/*                    ref={anchorElUser}*/}
-            {/*                    onClick={handleOpenUserMenu}*/}
-            {/*                    sx={{ p: 0 }}*/}
-            {/*                >*/}
-            {/*                    <Avatar alt="User" src="/static/images/avatar/2.jpg" />*/}
-            {/*                </IconButton>*/}
-            {/*            </Tooltip>*/}
-            {/*            <Menu*/}
-            {/*                sx={{ mt: '45px' }}*/}
-            {/*                id="menu-appbar"*/}
-            {/*                anchorEl={anchorElUser.current}*/}
-            {/*                anchorOrigin={{*/}
-            {/*                    vertical: 'top',*/}
-            {/*                    horizontal: 'right',*/}
-            {/*                }}*/}
-            {/*                keepMounted*/}
-            {/*                transformOrigin={{*/}
-            {/*                    vertical: 'top',*/}
-            {/*                    horizontal: 'right',*/}
-            {/*                }}*/}
-            {/*                open={Boolean(elUser)}*/}
-            {/*                onClose={handleCloseUserMenu}*/}
-            {/*            >*/}
-            {/*                {settings.map((setting) => (*/}
-            {/*                    <MenuItem key={setting} onClick={() => handleCloseUserMenu(setting)}>*/}
-            {/*                        <Typography textAlign="center">{t(setting)}</Typography>*/}
-            {/*                    </MenuItem>*/}
-            {/*                ))}*/}
-            {/*            </Menu>*/}
-            {/*        </Box>*/}
+                    <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
+                        {pages.map(page => (
+                            <NavigationButton
+                                key={page}
+                                onNavigate={() => onNavigate(page)}
+                                label={t(page)}
+                            />
+                        ))}
+                    </Box>
+                    <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
+                        <IconButton
+                            size="large"
+                            aria-label="account of current user"
+                            aria-controls="menu-appbar"
+                            aria-haspopup="true"
+                            onClick={handleOpenNavMenu}
+                            color="inherit"
+                        >
+                            <MenuIcon />
+                        </IconButton>
+                        <Menu
+                            id="menu-appbar"
+                            anchorEl={anchorElNav}
+                            anchorOrigin={{
+                                vertical: 'bottom',
+                                horizontal: 'left',
+                            }}
+                            keepMounted
+                            transformOrigin={{
+                                vertical: 'top',
+                                horizontal: 'left',
+                            }}
+                            open={Boolean(anchorElNav)}
+                            onClose={handleCloseNavMenu}
+                            sx={{
+                                display: { xs: 'block', md: 'none' },
+                            }}
+                        >
+                            {pages.map((page) => (
+                                <MenuItem key={page} onClick={() => handleCloseNavMenu(page)}>
+                                    <Typography textAlign="center">{t(page)}</Typography>
+                                </MenuItem>
+                            ))}
+                        </Menu>
+                    </Box>
+                    <Typography
+                        variant="h6"
+                        noWrap
+                        component="div"
+                        sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}
+                    >
+                        {t('logo')}
+                    </Typography>
+                    <Box sx={{ flexGrow: 0, marginRight: '10px', xs: 'none', md: 'flex' }}>
+                        <Tooltip title="Change language">
+                            <IconButton
+                                ref={anchorElLanguage}
+                                onClick={handleOpenLanguageMenu}
+                                sx={{ p: 0 }}
+                            >
+                                <Typography
+                                    sx={{ marginRight: 1 }}
+                                    variant="body2"
+                                    color="white"
+                                    component="div"
+                                >
+                                    {t(I18n.language)}
+                                </Typography>
+                                <LanguageIcon sx={{ color: 'white'}} />
+                            </IconButton>
+                        </Tooltip>
+                        <Menu
+                            sx={{ mt: '35px' }}
+                            id="menu-appbar"
+                            anchorEl={anchorElLanguage.current}
+                            anchorOrigin={{
+                                vertical: 'top',
+                                horizontal: 'right',
+                            }}
+                            keepMounted
+                            transformOrigin={{
+                                vertical: 'top',
+                                horizontal: 'right',
+                            }}
+                            open={Boolean(elLanguage)}
+                            onClose={handleCloseLanguageMenu}
+                        >
+                            {languages.map((lang) => (
+                                <MenuItem key={lang} onClick={() => onChangeLang(lang)}>
+                                    <Typography textAlign="center">{t(lang)}</Typography>
+                                </MenuItem>
+                            ))}
+                        </Menu>
+                    </Box>
+                    <Box sx={{ flexGrow: 0 }}>
+                        <Tooltip title="Open settings">
+                            <IconButton
+                                ref={anchorElUser}
+                                onClick={handleOpenUserMenu}
+                                sx={{ p: 0 }}
+                            >
+                                <Avatar alt="User" src="/static/images/avatar/2.jpg" />
+                            </IconButton>
+                        </Tooltip>
+                        <Menu
+                            sx={{ mt: '45px' }}
+                            id="menu-appbar"
+                            anchorEl={anchorElUser.current}
+                            anchorOrigin={{
+                                vertical: 'top',
+                                horizontal: 'right',
+                            }}
+                            keepMounted
+                            transformOrigin={{
+                                vertical: 'top',
+                                horizontal: 'right',
+                            }}
+                            open={Boolean(elUser)}
+                            onClose={handleCloseUserMenu}
+                        >
+                            {settings.map((setting) => (
+                                <MenuItem key={setting} onClick={() => handleCloseUserMenu(setting)}>
+                                    <Typography textAlign="center">{t(setting)}</Typography>
+                                </MenuItem>
+                            ))}
+                        </Menu>
+                    </Box>
                 </Toolbar>
             </Container>
         </AppBar>
