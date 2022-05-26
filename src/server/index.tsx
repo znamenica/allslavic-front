@@ -161,8 +161,8 @@ i18n
             // initImmediate: false,
             debug: false,
             preload: ['en', 'ru'],
-            ns: ['translations'],
-            defaultNS: 'translations',
+            ns: ['translation'],
+            defaultNS: 'translation',
             backend: {
                 loadPath: `${appSrc}/locales/{{lng}}/{{ns}}.json`,
                 addPath: `${appSrc}/locales/{{lng}}/{{ns}}.missing.json`,
