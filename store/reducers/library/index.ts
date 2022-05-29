@@ -1,7 +1,7 @@
 import {createSlice, Dispatch} from '@reduxjs/toolkit';
 import Api from "../../../pages/api/index";
 import {LibraryItem, LibraryType} from "../../../pages/api/library";
-import {SliceCaseReducers} from "@reduxjs/toolkit/src/createSlice";
+import {SliceCaseReducers} from "@reduxjs/toolkit";
 
 interface LibraryState {
     loading: boolean;

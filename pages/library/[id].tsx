@@ -10,7 +10,7 @@ import {useRouter} from "next/router";
 import {AppState} from "../../store";
 import {useSelector} from "react-redux";
 import {useAppDispatch} from "../../hooks";
-import {LibraryItem} from "../api/library";
+import {library, LibraryItem} from "../api/library";
 import {serverSideTranslations} from "next-i18next/serverSideTranslations";
 
 const LibraryItem = () => {
@@ -66,5 +66,12 @@ export const getStaticProps = async ({ locale }) => ({
         ...await serverSideTranslations(locale, ['common']),
     },
 })
+
+export async function getStaticPaths() {
+    return {
+        paths: library.map(e => ({ params: { id: e.id.toString() }})),
+        fallback: false,
+    }
+}
 
 export default LibraryItem;
