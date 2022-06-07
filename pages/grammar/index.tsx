@@ -70,49 +70,54 @@ const Grammar = () => {
   }, [search]);
   return (
       <Box
-          sx={{ marginTop: 10, flexGrow: 1, bgcolor: 'background.paper', display: 'flex' }}
+          sx={{ marginTop: 1, flexGrow: 1, bgcolor: 'background.paper', display: 'flex', flexDirection: 'column' }}
       >
         <Head>
           <title>{t('grammar')}</title>
-          <meta name={t('grammar')} content={"Грамматика межславянского языка"} />
+          <meta name="description" content={t('grammar_desc')} />
         </Head>
-        <Tabs
-            orientation="vertical"
-            variant="scrollable"
-            value={value}
-            onChange={handleChange}
-            aria-label="Vertical tabs example"
-            sx={{ borderRight: 1, borderColor: 'divider' }}
-        >
-          {parts.map(part => (
-              <Tab key={part.key} label={t(part.value)} {...a11yProps(part.key)} />
-          ))}
-        </Tabs>
-        <TabPanel value={value} index={0}>
-          {t('phonetics')}
-        </TabPanel>
-        <TabPanel value={value} index={1}>
-          <Typography>
-            {t('orthography')}
-          </Typography>
+        <Typography variant="h3" gutterBottom component="div">
+          {t('grammar')}
+        </Typography>
+        <Box sx={{ display: 'flex'}}>
+          <Tabs
+              orientation="vertical"
+              variant="scrollable"
+              value={value}
+              onChange={handleChange}
+              aria-label="Vertical tabs example"
+              sx={{ borderRight: 1, borderColor: 'divider' }}
+          >
+            {parts.map(part => (
+                <Tab key={part.key} label={t(part.value)} {...a11yProps(part.key)} />
+            ))}
+          </Tabs>
+          <TabPanel value={value} index={0}>
+            {t('phonetics')}
+          </TabPanel>
+          <TabPanel value={value} index={1}>
+            <Typography>
+              {t('orthography')}
+            </Typography>
 
-          <Alphabet />
-        </TabPanel>
-        <TabPanel value={value} index={2}>
-          {t('nouns')}
-        </TabPanel>
-        <TabPanel value={value} index={3}>
-          {t('verbs')}
-        </TabPanel>
-        <TabPanel value={value} index={4}>
-          {t('pronouns')}
-        </TabPanel>
-        <TabPanel value={value} index={5}>
-          {t('adjectives')}
-        </TabPanel>
-        <TabPanel value={value} index={6}>
-          {t('numerals')}
-        </TabPanel>
+            <Alphabet />
+          </TabPanel>
+          <TabPanel value={value} index={2}>
+            {t('nouns')}
+          </TabPanel>
+          <TabPanel value={value} index={3}>
+            {t('verbs')}
+          </TabPanel>
+          <TabPanel value={value} index={4}>
+            {t('pronouns')}
+          </TabPanel>
+          <TabPanel value={value} index={5}>
+            {t('adjectives')}
+          </TabPanel>
+          <TabPanel value={value} index={6}>
+            {t('numerals')}
+          </TabPanel>
+        </Box>
       </Box>
   );
 };

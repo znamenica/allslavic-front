@@ -9,12 +9,13 @@ import {serverSideTranslations} from "next-i18next/serverSideTranslations";
 
 export default function Home({}) {
     const { t } = useTranslation('common');
-    const desc = "Межславянский портал предоставляет ресурсы, посвященные межславянскому языку. В данный момент основные разделы разрабатываются.";
+    const desc = t('logo_desc');
     return (
         <div style={{ display: 'flex', height: '100%' }}>
             <Head>
+                <meta name="robots" content="all" />
                 <title>{t('logo')}</title>
-                <meta name={t('logo')} content={desc} />
+                <meta name="description" content={desc} />
             </Head>
             <div style={{ flexGrow: 1 }}>
                 <Typography variant="h3" gutterBottom component="div">
@@ -24,26 +25,25 @@ export default function Home({}) {
                     {desc}
                 </Typography>
                 <Typography variant="body1">
-                    Цели межславянского языка:
+                    {t('interslavic_goals')}
                 </Typography>
                 <List>
                     <ListItem>
                         <ListItemText
-                            primary="Простота изучения"
-                            secondary="Возможность для славяноязычных людей не учить, а доучивать язык"
+                            primary={t('simple_studying')}
+                            secondary={t('simple_studying_desc')}
                         />
                     </ListItem>
                     <ListItem>
                         <ListItemText
-                            primary="Легкость понимания"
-                            secondary="Возможность облегчения понимания природных славянских языков как современных, так и исторических, для славяноязычных, так и для инозычных"
+                            primary={t('easy_understand')}
+                            secondary={t('easy_understand_desc')}
                         />
                     </ListItem>
                     <ListItem>
                         <ListItemText
-                            primary="Международное общение"
-                            secondary="Возможность использования как языка международного общения, как между славянами, так и не славяноязычными, для различного рода целей влючая: туризм, бизнес, бытовое и попредметное общение, церковную тематику
-"
+                            primary={t('international_communication')}
+                            secondary={t('international_communication_desc')}
                         />
                     </ListItem>
                 </List>

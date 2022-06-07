@@ -3,16 +3,24 @@ import Typography from "@mui/material/Typography";
 import React from "react";
 import Head from "next/head";
 import {serverSideTranslations} from "next-i18next/serverSideTranslations";
+import {useTranslation} from "next-i18next";
 
 const About = () => {
+    const {t} = useTranslation('common');
   return (
       <Box>
           <Head>
-              <title>О портале</title>
-              <meta name="О портале" content="Информация о портале" />
+              <title>{t('about')}</title>
+              <meta name="description" content={t('about_desc')} />
           </Head>
           <Typography variant="h3" gutterBottom component="div">
               О портале
+          </Typography>
+          <Typography variant="subtitle1" gutterBottom component="div">
+              Версия 0.2.1 (07.05.2022)
+          </Typography>
+          <Typography variant="body1" gutterBottom component="div">
+              - Исправлены ошибки переноса<br/>
           </Typography>
           <Typography variant="subtitle1" gutterBottom component="div">
               Версия 0.2.0 (26.05.2022)

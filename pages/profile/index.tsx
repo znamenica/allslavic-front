@@ -7,9 +7,11 @@ import {Preferences} from "../../lib/constants";
 import {ORTHOGRAPHY} from "../../utils/transcribers";
 import Head from "next/head";
 import {serverSideTranslations} from "next-i18next/serverSideTranslations";
+import {useTranslation} from "next-i18next";
 
 const Profile = () => {
     const [transcription, setTranscription] = useState<string|null>(null);
+    const {t} = useTranslation('common');
 
     const onTranscriptionChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         const val = (event.target as HTMLInputElement).value;
@@ -26,17 +28,19 @@ const Profile = () => {
     return (
         <Box>
             <Head>
-                <title>Профиль пользователя</title>
-                <meta name="Профиль пользователя" content="Пользовательские настройки" />
+                <title>{t('profile_full')}</title>
+                <meta name="description" content={t('profile_full_desc')} />
             </Head>
             <Typography variant="h3" gutterBottom component="div">
-                Профиль
+                {t('profile')}
             </Typography>
             <Typography variant="subtitle1" gutterBottom component="div">
-                Кешированные настройки для пользования сайтом. Все настройки привязаны к конкретному браузеру устройства.
+                {t('cash_settings')}
             </Typography>
             <FormControl>
-                <FormLabel id="transcription-buttons-group-label">Вариант правописания</FormLabel>
+                <FormLabel id="transcription-buttons-group-label">
+                    {t('orthography_setting')}
+                </FormLabel>
                 <RadioGroup
                     row
                     aria-labelledby="transcription-buttons-group-label"
@@ -44,11 +48,31 @@ const Profile = () => {
                     value={transcription}
                     onChange={onTranscriptionChange}
                 >
-                    <FormControlLabel value={ORTHOGRAPHY.CYR} control={<Radio />} label="Проста кириллица" />
-                    <FormControlLabel value={ORTHOGRAPHY.CYR_SCI} control={<Radio />} label="Научна кириллица" />
-                    <FormControlLabel value={ORTHOGRAPHY.CYR_PHON} control={<Radio />} label="Фонетична кириллица" />
-                    <FormControlLabel value={ORTHOGRAPHY.LAT} control={<Radio />} label="Latinica" />
-                    <FormControlLabel value={ORTHOGRAPHY.LAT_PHON} control={<Radio />} label="Fonetična latinica" />
+                    <FormControlLabel
+                        value={ORTHOGRAPHY.CYR}
+                        control={<Radio />}
+                        label={t('simple_cyr')}
+                    />
+                    <FormControlLabel
+                        value={ORTHOGRAPHY.CYR_SCI}
+                        control={<Radio />}
+                        label={t('sci_cyr')}
+                    />
+                    <FormControlLabel
+                        value={ORTHOGRAPHY.CYR_PHON}
+                        control={<Radio />}
+                        label={t('phon_cyr')}
+                    />
+                    <FormControlLabel
+                        value={ORTHOGRAPHY.LAT}
+                        control={<Radio />}
+                        label={t('simple_lat')}
+                    />
+                    <FormControlLabel
+                        value={ORTHOGRAPHY.LAT_PHON}
+                        control={<Radio />}
+                        label={t('phon_lat')}
+                    />
                 </RadioGroup>
             </FormControl>
         </Box>

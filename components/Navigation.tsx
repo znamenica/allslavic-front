@@ -17,7 +17,6 @@ import MenuIcon from '@mui/icons-material/Menu';
 import {useEffect, useRef, useState} from "react";
 import {useRouter} from "next/router";
 import Link from "next/link";
-import {serverSideTranslations} from "next-i18next/serverSideTranslations";
 
 const settings = ['profile', 'about'];
 const languages = ['ru', 'en'];
@@ -31,7 +30,7 @@ const Navigation = () => {
     const [elUser, setElUser] = useState<boolean|null>(null);
     const [elLanguage, setElLanguage] = useState<boolean|null>(null);
 
-    const { t } = useTranslation('common');
+    const { t, i18n } = useTranslation('common');
     const router = useRouter();
 
     const handleOpenNavMenu = (event: React.MouseEvent<HTMLElement>) => {
@@ -160,7 +159,7 @@ const Navigation = () => {
                                     color="white"
                                     component="div"
                                 >
-                                    {/*{t(I18n.language)}*/}
+                                    {t(i18n.language)}
                                 </Typography>
                                 <LanguageIcon sx={{ color: 'white'}} />
                             </IconButton>

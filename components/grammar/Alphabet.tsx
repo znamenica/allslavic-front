@@ -42,14 +42,13 @@ const rows: any[] = [
     { value: 'ы', latin: 'y', audio: 'y', alphabets: [ORTHOGRAPHY.CYR, ORTHOGRAPHY.CYR_SCI, ORTHOGRAPHY.CYR_PHON, ORTHOGRAPHY.LAT, ORTHOGRAPHY.LAT_PHON]  },
 ];
 
-const sounds = (v) => `/sounds/${v}`;
+const sounds = (v) => `/audio/alphabet/${v}.mp3`;
 
 const Alphabet = memo(() => {
     const urls = rows.map(f => f.audio && sounds(f.audio) ? { key: f.audio, url: sounds(f.audio) } : null);
     const validUrls = urls.filter(e => !!e) as Array<{ key: string, url: string }>;
     const transcription = localStorage.getItem(Preferences.transcription);
     const [players, toggle] = useMultiAudio(validUrls);
-    console.log(players);
     return (
         <div style={{ display: 'grid', gap: '10px', gridTemplate: 'repeat(5, 1fr) / repeat(5, 1fr)' }}>
             {rows

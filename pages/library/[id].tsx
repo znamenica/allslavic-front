@@ -12,10 +12,12 @@ import {useSelector} from "react-redux";
 import {useAppDispatch} from "../../hooks";
 import {library, LibraryItem} from "../api/library";
 import {serverSideTranslations} from "next-i18next/serverSideTranslations";
+import {useTranslation} from "next-i18next";
 
 const LibraryItem = () => {
     const [transcription, setTranscription] = useState<string|null>(null);
     const router = useRouter();
+    const {t } = useTranslation('common');
     const dispatch = useAppDispatch();
     const item = useSelector<AppState, LibraryItem|null>(store => store.library.item);
     useEffect(() => {
@@ -29,8 +31,8 @@ const LibraryItem = () => {
     return item ? (
         <Box sx={{ marginTop: 1 }}>
             <Head>
-                <title>Библиотека переводов</title>
-                <meta name="Библиотека переводов" content="Тексты на межславянском языке" />
+                <title>{t('library')}</title>
+                <meta name="description" content={t('library_desc')} />
             </Head>
             <Typography
                 variant="body2"
@@ -55,7 +57,7 @@ const LibraryItem = () => {
     ) : (
         <Box>
             <Typography variant="h3" gutterBottom component="div">
-                Загрузка
+                {t('loading')}
             </Typography>
         </Box>
     );

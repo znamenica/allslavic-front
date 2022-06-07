@@ -15,6 +15,7 @@ import {commonTranscribe} from "../../utils/transcribers";
 import {useRouter} from "next/router";
 import Head from "next/head";
 import {serverSideTranslations} from "next-i18next/serverSideTranslations";
+import {useTranslation} from "next-i18next";
 
 const StoryAvatar = ({ value }: { value: LibraryType }) => {
     switch (value) {
@@ -37,6 +38,7 @@ const Library = () => {
     const [itemTypes, setItemTypes] = useState<LibraryType[]>([]);
     const [transcription, setTranscription] = useState<string|null>(null);
     const router = useRouter();
+    const {t} = useTranslation('common');
     const items = useAppSelector(currentPageItemsSelector);
     const totalPage = useAppSelector(totalPageSelector);
     const dispatch = useAppDispatch();
@@ -63,38 +65,38 @@ const Library = () => {
     return (
         <Box>
             <Head>
-                <title>Библиотека переводов</title>
-                <meta name="Библиотека переводов" content="Тексты на межславянском языке" />
+                <title>{t('library')}</title>
+                <meta name="description" content={t('library_desc')} />
             </Head>
             <Typography variant="h3" gutterBottom component="div">
-                Библиотека переводов
+                {t('library')}
             </Typography>
             <Box sx={{ display: "flex", flexWrap: "wrap", gap: "12px", marginTop: 1, marginBottom: 1, }}>
                 <Typography variant="subtitle1">
-                    Категории
+                    {t('categories')}
                 </Typography>
                 <Chip
-                    label="Стихи"
+                    label={t('poems')}
                     variant={getOutlined(LibraryType.POEM)}
                     onClick={() => onChipClick(LibraryType.POEM)}
                 />
                 <Chip
-                    label="Проза"
+                    label={t('prose')}
                     variant={getOutlined(LibraryType.PROSE)}
                     onClick={() => onChipClick(LibraryType.PROSE)}
                 />
                 <Chip
-                    label="Статьи"
+                    label={t('articles')}
                     variant={getOutlined(LibraryType.ARTICLE)}
                     onClick={() => onChipClick(LibraryType.ARTICLE)}
                 />
                 <Chip
-                    label="Новости"
+                    label={t('news')}
                     variant={getOutlined(LibraryType.NEWS)}
                     onClick={() => onChipClick(LibraryType.NEWS)}
                 />
                 <Chip
-                    label="Обучение"
+                    label={t('studying')}
                     variant={getOutlined(LibraryType.STUDYING)}
                     onClick={() => onChipClick(LibraryType.STUDYING)}
                 />

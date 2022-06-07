@@ -82,8 +82,8 @@ const Tools = () => {
     return (
         <Box>
             <Head>
-                <title>Транскрибатор межславянского языка</title>
-                <meta name="Транскрибатор межславянского языка" content="Перевод с кириллицы на латиницу межславянского языка" />
+                <title>{t('transcriber')}</title>
+                <meta name="description" content={t('transcriber_desc')} />
             </Head>
             <Typography variant="h3" gutterBottom component="div">
                 {t('tools')}
@@ -106,18 +106,28 @@ const Tools = () => {
                         {t('transcriber-cyrillic')}
                     </Typography>
                     <FormControl sx={{ marginBottom: 2 }}>
-                        <InputLabel id="tType-select-label">Перевести в</InputLabel>
+                        <InputLabel id="tType-select-label">
+                            {t('translate_into')}
+                        </InputLabel>
                         <Select
                             labelId="tType-select-label"
                             id="tType-select"
                             value={tType}
-                            label="Перевести в"
+                            label={t('translate_into')}
                             onChange={handleTypeChange}
                         >
-                            <MenuItem value={ORTHOGRAPHY.CYR}>Проста кирилица</MenuItem>
-                            <MenuItem value={ORTHOGRAPHY.CYR_SCI}>Научна кирилица</MenuItem>
-                            <MenuItem value={ORTHOGRAPHY.LAT}>Prosta latinica</MenuItem>
-                            <MenuItem value={ORTHOGRAPHY.LAT_PHON}>Fonetična latinica</MenuItem>
+                            <MenuItem value={ORTHOGRAPHY.CYR}>
+                                {t('simple_cyr')}
+                            </MenuItem>
+                            <MenuItem value={ORTHOGRAPHY.CYR_SCI}>
+                                {t('sci_cyr')}
+                            </MenuItem>
+                            <MenuItem value={ORTHOGRAPHY.LAT}>
+                                {t('simple_lat')}
+                            </MenuItem>
+                            <MenuItem value={ORTHOGRAPHY.LAT_PHON}>
+                                {t('phon_lat')}
+                            </MenuItem>
                         </Select>
                     </FormControl>
                     <div style={{ display: 'flex', flexDirection: "column", maxWidth: '500px' }}>

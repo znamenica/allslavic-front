@@ -10,16 +10,42 @@ import { TransitionProps } from '@mui/material/transitions';
 import Toolbar from "@mui/material/Toolbar";
 import Image from "next/image";
 import {serverSideTranslations} from "next-i18next/serverSideTranslations";
+import {useTranslation} from "next-i18next";
 
 const itemData = [
     {img: '/images/animals.jpeg', title: "animals"},
-    {img: '/body-parts.jpeg', title: "body parts"},
-    {img: '/images/emotions.jpeg', title: "emotions"},
-    {img: '/images/house-parts.jpeg', title: "house parts"},
-    {img: '/images/vegetables.jpeg', title: "vegetables"},
+    {img: '/images/animals_2.jpeg', title: "animals"},
+    {img: '/images/animals_3.jpeg', title: "animals"},
+    {img: '/images/body_parts.jpeg', title: "body parts"},
+    {img: '/images/buildings.jpeg', title: "buildings"},
+    {img: '/images/clothes.jpeg', title: "clothes"},
+    {img: '/images/colors.jpeg', title: "colors"},
+    {img: '/images/devices.jpeg', title: "devices"},
     {img: '/images/dishes.png', title: "dishes"},
+    {img: '/images/dishes.jpeg', title: "dishes"},
+    {img: '/images/drinks.png', title: "drinks"},
+    {img: '/images/eating.png', title: "eating"},
+    {img: '/images/eating_1.png', title: "eating"},
+    {img: '/images/emotions.jpeg', title: "emotions"},
+    {img: '/images/figures.jpeg', title: "figures"},
+    {img: '/images/fruits.jpeg', title: "fruits"},
+    {img: '/images/higiene.png', title: "higiene"},
+    {img: '/images/house-parts.jpeg', title: "house parts"},
+    {img: '/images/insects.jpeg', title: "insects"},
     {img: '/images/mebel.png', title: "mebel"},
+    {img: '/images/medicine.jpeg', title: "jpeg"},
+    {img: '/images/musical_instruments.jpeg', title: "musical instruments"},
+    {img: '/images/professions.png', title: "professions"},
+    {img: '/images/professions_2.jpeg', title: "professions"},
+    {img: '/images/studying.jpeg', title: "studying"},
+    {img: '/images/summer.jpeg', title: "summer"},
+    {img: '/images/summer_2.png', title: "summer"},
     {img: '/images/transport.png', title: "transport"},
+    {img: '/images/transport.jpeg', title: "transport"},
+    {img: '/images/vegetables.jpeg', title: "vegetables"},
+    {img: '/images/verbs.jpeg', title: "verbs"},
+    {img: '/images/verbs_2.png', title: "verbs"},
+    {img: '/images/verbs_3.jpeg', title: "verbs"},
     {img: '/images/weather.png', title: "weather"},
 ];
 
@@ -34,6 +60,7 @@ const Transition = forwardRef(function Transition(
 
 const Dictionary = () => {
     const [open, setOpen] = useState(false);
+    const {t} = useTranslation('common');
     const [img, setImg] = useState<{img: string, title: string }|null>(null);
 
     const handleClickOpen = () => {
@@ -51,17 +78,16 @@ const Dictionary = () => {
     return (
         <Box>
             <Typography variant="h5">
-                Раздел находится в разработке
+                {t('page_in_progress')}
             </Typography>
             <Typography variant="subtitle1">
-                Пока можете ознакомиться с некоторыми визуальными материалами
+                {t('page_in_progress_desc')}
             </Typography>
-            <ImageList sx={{ width: 500, height: 450 }} cols={3} rowHeight={164}>
+            <ImageList sx={{ width: '100%', height: 500 }} cols={5} rowHeight={200}>
                 {itemData.map((item) => (
-                    <ImageListItem key={item.img} onClick={() => onItemClick(item)}>
+                    <ImageListItem sx={{ position: 'relative', width: 200, height: 200 }} key={item.img} onClick={() => onItemClick(item)}>
                         <Image
-                            src={`${item.img}?w=164&h=164&fit=crop&auto=format`}
-                            // srcSet={`${item.img}?w=164&h=164&fit=crop&auto=format&dpr=2 2x`}
+                            src={item.img}
                             alt={item.title}
                             layout='fill'
                             loading="lazy"
@@ -90,7 +116,7 @@ const Dictionary = () => {
                         </Typography>
                     </Toolbar>
                 </AppBar>
-                <Box style={{ maxHeight: 'calc(100% - 60px)' }}>
+                <Box style={{ maxHeight: 'calc(100% - 60px)', position: "relative", width: '100%' }}>
                     {img && (
                         <Image
                             style={{ backgroundSize: "contain", maxHeight: "inherit" }}
