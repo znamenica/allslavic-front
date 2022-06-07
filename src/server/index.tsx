@@ -14,6 +14,7 @@ import * as path from "path";
 import * as fs from "fs";
 import * as process from "process";
 import { renderToStream } from 'react-streaming/server'
+import Html from "../common/app/Html";
 
 let assets: any;
 
@@ -60,13 +61,20 @@ export const renderApp = (req: any, res: any) => {
     const BaseApp = () => {
         // const [isPending] = useTransition();
         // return isPending ? <>loading</> : (
-            return (<I18nextProvider i18n={req.i18n}>
-                <Provider store={store}>
-                    <StaticRouter location={req.url}>
-                        <App />
-                    </StaticRouter>
-                </Provider>
-            </I18nextProvider>
+            return (<Html
+                    assets={assets}
+                    jsAssets={jsScriptTagsFromAssets(assets, 'client', ' defer crossorigin')}
+                    cssAssets={cssLinksFromAssets(assets, 'client')}
+                    title="test"
+                >
+                <I18nextProvider i18n={req.i18n}>
+                    <Provider store={store}>
+                        <StaticRouter location={req.url}>
+                            <App />
+                        </StaticRouter>
+                    </Provider>
+                </I18nextProvider>
+                </Html>
         );
     }
 

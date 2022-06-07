@@ -1,12 +1,14 @@
-const Html = ({ jsAssets, cssAssets, children, title }: { jsAssets: any, cssAssets: any, children: any, title: string }) => {
+const Html = ({ assets, jsAssets, cssAssets, children, title }: { assets: any, jsAssets: any, cssAssets: any, children: any, title: string }) => {
+    const JsAssets = jsAssets && typeof jsAssets !== "string" ? jsAssets : () => null;
+    const CssAssets = cssAssets && typeof cssAssets !== "string" ? cssAssets : () => null;
     return (
         <html lang="en">
         <head>
             <meta charSet="utf-8" />
             <meta name="viewport" content="width=device-width, initial-scale=1" />
             <link rel="shortcut icon" href="favicon.ico" />
-            <link rel="stylesheet" href={cssAssets} />
             <title>{title}</title>
+            <CssAssets />
         </head>
         <body>
         <noscript
@@ -17,10 +19,11 @@ const Html = ({ jsAssets, cssAssets, children, title }: { jsAssets: any, cssAsse
         {children}
         <script
             dangerouslySetInnerHTML={{
-                __html: jsAssets
+                __html: `assetManifest = ${JSON.stringify(assets)};`
             }}
         />
         </body>
+        <JsAssets />
         </html>
     );
 };
