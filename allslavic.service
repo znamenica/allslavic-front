@@ -1,0 +1,14 @@
+[Unit]
+Description=AllSlavic
+
+[Service]
+ExecStart=npm start --prefix /var/www/allslavic-front -- -p 3000
+Restart=always
+User=_nginx
+# Note Debian/Ubuntu uses 'nogroup', RHEL/Fedora uses 'nobody'
+Group=nogroup
+Environment=PATH="/usr/bin:/usr/local/bin"
+WorkingDirectory=/var/www/allslavic-front
+
+[Install]
+WantedBy=multi-user.target
