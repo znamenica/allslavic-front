@@ -12,7 +12,6 @@ import MenuItem from '@mui/material/MenuItem';
 import {useTranslation} from "next-i18next";
 import LanguageIcon from '@mui/icons-material/Language';
 import NavigationButton from "./ui/NavigationButton";
-import Config from "../utils/Config";
 import MenuIcon from '@mui/icons-material/Menu';
 import {useEffect, useRef, useState} from "react";
 import {useRouter} from "next/router";
@@ -40,7 +39,7 @@ const Navigation = () => {
     const onNavigate = (page: string) => {
         switch (page) {
             case "slavic-circle":
-                window.open(Config.get().CIRCLE_API);
+                window.open(process.env.NEXT_PUBLIC_CIRCLE_API);
                 break;
             default:
                 router.push(page);
