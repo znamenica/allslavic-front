@@ -54,5 +54,13 @@
   "transcriber": "Interslavic language transcriber",
   "transcriber_desc": "Transcribing from cyrillic to latin in Interslavic",
   "translate_into": "Transcribe into",
-  "grammar_desc": "Interslavic language grammar"
+  "grammar_desc": "Interslavic language grammar",
+  "help": "Feedback",
+  "help_desc": "Interslavic portal feedback",
+  "your_name": "Your name",
+  "your_email": "Your email",
+  "your_message": "Your message",
+  "send_request": "Send request",
+  "help_info": "Here you can ask a question about portal, link with the developers or share your ideas about the portal",
+  "sent_ok": "Your message has been successfully sent!"
 }

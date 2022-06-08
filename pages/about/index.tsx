@@ -17,10 +17,18 @@ const About = () => {
               О портале
           </Typography>
           <Typography variant="subtitle1" gutterBottom component="div">
+              Версия 0.2.2 (08.05.2022)
+          </Typography>
+          <Typography variant="body1" gutterBottom component="div">
+              - Добавлена обратная связь<br/>
+              - Исправлено отображение отдельного визуального материала
+          </Typography>
+          <Typography variant="subtitle1" gutterBottom component="div">
               Версия 0.2.1 (07.05.2022)
           </Typography>
           <Typography variant="body1" gutterBottom component="div">
               - Исправлены ошибки переноса<br/>
+              - Переработан блок с визуальными материалами
           </Typography>
           <Typography variant="subtitle1" gutterBottom component="div">
               Версия 0.2.0 (26.05.2022)

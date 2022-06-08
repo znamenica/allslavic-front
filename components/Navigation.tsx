@@ -17,7 +17,7 @@ import {useEffect, useRef, useState} from "react";
 import {useRouter} from "next/router";
 import Link from "next/link";
 
-const settings = ['profile', 'about'];
+const settings = ['profile', 'help', 'about'];
 const languages = ['ru', 'en'];
 const pages = ["grammar", "dictionary", "library", "tools", "slavic-circle"];
 

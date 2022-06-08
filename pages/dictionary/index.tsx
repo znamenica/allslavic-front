@@ -75,6 +75,7 @@ const Dictionary = () => {
         setImg(image);
         handleClickOpen();
     };
+    console.log(img);
     return (
         <Box>
             <Typography variant="h5">
@@ -116,12 +117,12 @@ const Dictionary = () => {
                         </Typography>
                     </Toolbar>
                 </AppBar>
-                <Box style={{ maxHeight: 'calc(100% - 60px)', position: "relative", width: '100%' }}>
+                <Box style={{ maxHeight: 'calc(100% - 60px)', position: "relative", width: '100%', height: '100%' }}>
                     {img && (
                         <Image
-                            style={{ backgroundSize: "contain", maxHeight: "inherit" }}
                             alt={img.title}
                             src={img.img}
+                            objectFit="scale-down"
                             layout='fill'
                         />
                     )}
