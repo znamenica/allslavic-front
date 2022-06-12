@@ -5,7 +5,8 @@ const localFLat = (symbol: string) => {
         case "а": return "a";
         case "б": return "b";
         case "в": return "v";
-        case "г": return "g";
+        case "г": return "h";
+        case "ґ": return "g";
         case "д": return "d";
         case "е": return "e";
         case "і": return "j";
@@ -24,7 +25,7 @@ const localFLat = (symbol: string) => {
         case "т": return "t";
         case "у": return "u";
         case "ф": return "f";
-        case "х": return "h";
+        case "х": return "x";
         case "ц": return "c";
         case "ч": return "č";
         case "ш": return "š";
@@ -54,7 +55,8 @@ const localFLatPhon = (symbol: string) => {
         case "а": return "a";
         case "б": return "b";
         case "в": return "v";
-        case "г": return "g";
+        case "г": return "h";
+        case "ґ": return "g";
         case "д": return "d";
         case "е": return "e";
         case "ѣ": return "ıě";
@@ -73,7 +75,7 @@ const localFLatPhon = (symbol: string) => {
         case "т": return "t";
         case "у": return "u";
         case "ф": return "f";
-        case "х": return "h";
+        case "х": return "x";
         case "ц": return "c";
         case "ч": return "č";
         case "ш": return "š";
@@ -104,6 +106,7 @@ const localFSci = (symbol: string) => {
         case "б": return "б";
         case "в": return "в";
         case "г": return "г";
+        case "ґ": return "ґ";
         case "д": return "д";
         case "е": return "е";
         case "ѣ": return "ѣ";
@@ -153,6 +156,7 @@ const localF = (symbol: string) => {
         case "б": return "б";
         case "в": return "в";
         case "г": return "г";
+        case "ґ": return "г";
         case "д": return "д";
         case "е": return "е";
         case "ѣ": return "е";
