@@ -39,9 +39,13 @@ export const librarySlice = createSlice<LibraryState, SliceCaseReducers<LibraryS
     }
 });
 
-export const getLibraryItems = (params: { type: LibraryType[] }) => (dispatch: Dispatch) => {
+export const getLibraryItems = (itemTypes?: LibraryType[]) => (dispatch: Dispatch, getState) => {
     dispatch(setLoading(true));
-    Api.texts.getAll(params).then((res: TextItemsResponse) => {
+    const {library} = getState();
+    Api.texts.getAll({
+        page: library.page,
+        count: library.count,
+    }).then((res: TextItemsResponse) => {
         dispatch(setItems(res.items));
         dispatch(setLoading(false));
     });

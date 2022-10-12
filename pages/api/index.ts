@@ -47,7 +47,7 @@ const Api = {
   },
   tags: {
       getAll(token): Promise<NewsItemsResponse> {
-          return fetch(`${process.env.NEXT_PUBLIC_API}/tags.json?p=1&per=10`, {
+          return fetch(`${process.env.NEXT_PUBLIC_API}/t.json?p=1&per=10`, {
               headers: new Headers({ 'X-Auth-Token': token }),
           })
               .then(res => {
@@ -192,6 +192,16 @@ const Api = {
                     'X-Auth-Token': token,
                 }),
                 body: JSON.stringify(news),
+            });
+        },
+        edit(id, item, token) {
+            return fetch(`${process.env.NEXT_PUBLIC_API}/library/${id}.json`, {
+                method: "PATCH",
+                headers: new Headers({
+                    'Content-Type': 'application/json',
+                    'X-Auth-Token': token,
+                }),
+                body: JSON.stringify(item),
             });
         }
     }

@@ -11,11 +11,13 @@ import {currentPageItemsSelector, getLibraryItems, setPage, totalPageSelector} f
 import {LibraryType} from "../api/library";
 import {useAppDispatch, useAppSelector} from "../../hooks";
 import {Preferences} from "../../lib/constants";
-import {commonTranscribe} from "../../utils/transcribers";
 import {useRouter} from "next/router";
 import Head from "next/head";
 import {serverSideTranslations} from "next-i18next/serverSideTranslations";
 import {useTranslation} from "next-i18next";
+import EditIcon from "@mui/icons-material/Edit";
+import DeleteIcon from "@mui/icons-material/Delete";
+import Api from "../api";
 
 const StoryAvatar = ({ value }: { value: LibraryType }) => {
     switch (value) {
@@ -36,6 +38,7 @@ const StoryAvatar = ({ value }: { value: LibraryType }) => {
 
 const Library = () => {
     const [itemTypes, setItemTypes] = useState<LibraryType[]>([]);
+    const isLoggedIn = useAppSelector(state => state.me.loggedIn);
     const [transcription, setTranscription] = useState<string|null>(null);
     const router = useRouter();
     const {t} = useTranslation('common');
@@ -55,11 +58,22 @@ const Library = () => {
     const handlePageChange = (event: React.ChangeEvent<unknown>, value: number) => {
         dispatch(setPage(value));
     };
+    const onAdd = () => {
+        router.push('/library/add');
+    };
+    const handlerEdit = (id) => {
+        router.push(`/library/${id}/edit`);
+    };
+    const handlerDelete = (id) => {
+        const token = localStorage.getItem("access_token");
+        Api.texts.deleteById(id, token);
+        dispatch(getLibraryItems());
+    };
     useEffect(() => {
         setTranscription(localStorage.getItem(Preferences.transcription));
     }, []);
     useEffect(() => {
-        dispatch(getLibraryItems({ type: itemTypes }));
+        dispatch(getLibraryItems(itemTypes));
     }, [dispatch, itemTypes ]);
     const getOutlined = (value: LibraryType) => itemTypes.includes(value) ? "filled" : "outlined";
     return (
@@ -71,9 +85,14 @@ const Library = () => {
             <Typography variant="h3" gutterBottom component="div">
                 {t('library')}
             </Typography>
-            <Button onClick={() => router.push('/library_old')}>
-                {t('library_old')}
-            </Button>
+            {isLoggedIn && (
+                <Box>
+                    <Button variant="contained" onClick={onAdd}>{t('add')}</Button>
+                    <Button onClick={() => router.push('/library_old')}>
+                        {t('library_old')}
+                    </Button>
+                </Box>
+            )}
             <Box sx={{ display: "flex", flexWrap: "wrap", gap: "12px", marginTop: 1, marginBottom: 1, }}>
                 <Typography variant="subtitle1">
                     {t('categories')}
@@ -117,20 +136,43 @@ const Library = () => {
                                 <StoryAvatar value={item.type} />
                             </ListItemAvatar>
                             <ListItemText
-                                primary={
-                                    transcription
-                                        ? commonTranscribe(item.title, transcription)
-                                        : item.title
-                                }
+                                primary={item.title}
                                 secondary={
                                     <React.Fragment>
-                                        {transcription
-                                            ? commonTranscribe(item.value.slice(0, 200), transcription)
-                                            : item.value.slice(0, 200)}
+                                        {item.abstract}
                                     </React.Fragment>
                                 }
                             />
-                        </ListItem>))}
+                            {isLoggedIn && (
+                                <EditIcon
+                                    sx={{
+                                        position: 'absolute',
+                                        top: '20px',
+                                        right: '40px',
+                                        cursor: "pointer"
+                                    }}
+                                    onClick={(e) => {
+                                        e.stopPropagation();
+                                        handlerEdit(item.id);
+                                    }}
+                                />
+                            )}
+                            {isLoggedIn && (
+                                <DeleteIcon
+                                    sx={{
+                                        position: 'absolute',
+                                        top: '20px',
+                                        right: '10px',
+                                        cursor: "pointer"
+                                    }}
+                                    onClick={(e) => {
+                                        e.stopPropagation();
+                                        handlerDelete(item.id);
+                                    }}
+                                />
+                            )}
+                        </ListItem>
+                    ))}
                 </List>
                 <Pagination
                     count={totalPage}

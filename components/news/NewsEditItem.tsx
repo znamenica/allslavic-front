@@ -1,7 +1,6 @@
 import {Box, Button, Container, FormControl, InputLabel, MenuItem, Select, TextField, Typography} from "@mui/material";
 import TextEditor from "../ui/TextEditorLoader";
 import {useTranslation} from "next-i18next";
-import {useAppSelector} from "../../hooks";
 
 const NewsEditItem = ({
     name,

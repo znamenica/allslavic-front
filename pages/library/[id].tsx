@@ -3,7 +3,6 @@ import React, {useEffect, useState} from "react";
 import Box from "@mui/material/Box";
 import {getLibraryItem} from "../../store/reducers/library_old";
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
-import {commonTranscribe} from "../../utils/transcribers";
 import {Preferences} from "../../lib/constants";
 import Head from "next/head";
 import {useRouter} from "next/router";
@@ -42,15 +41,9 @@ const LibraryItem = ({ item }) => {
                 <ArrowBackIcon/>
             </Typography>
             <Typography variant="h3" gutterBottom component="div">
-                {transcription
-                    ? commonTranscribe(item.title, transcription)
-                    : item.title}
+                {item.title}
             </Typography>
-            <Typography variant="body1" gutterBottom component="div" sx={{ whiteSpace: "pre-wrap" }}>
-                {transcription
-                    ? commonTranscribe(item.value, transcription)
-                    : item.value}
-            </Typography>
+            <div dangerouslySetInnerHTML={{ __html: item.text }} />
         </Box>
     ) : (
         <Box>

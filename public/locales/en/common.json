@@ -66,5 +66,8 @@
   "local_profile": "Device profile",
   "name": "Name",
   "send": "Send",
-  "add_news": "Add news"
+  "add_news": "Add news",
+  "cover": "Cover",
+  "add_text": "Add text",
+  "description": "Description"
 }
