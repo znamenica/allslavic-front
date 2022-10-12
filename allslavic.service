@@ -1,0 +1,11 @@
+[Unit]
+Description=AllSlavic
+
+[Service]
+ExecStart=npm start --prefix /var/www/allslavic-front -- -p 3000
+Restart=on-failure
+User=_nginx
+WorkingDirectory=/var/www/allslavic-front
+
+[Install]
+WantedBy=multi-user.target
