@@ -2,7 +2,6 @@ import {createSlice, Dispatch} from '@reduxjs/toolkit';
 import Api from "../../../pages/api/index";
 import {LibraryItem, LibraryType} from "../../../pages/api/library";
 import {SliceCaseReducers} from "@reduxjs/toolkit";
-import {TextItem, TextItemResponse, TextItemsResponse} from "../../../pages/api/texts";
 
 interface LibraryState {
     loading: boolean;
@@ -20,7 +19,7 @@ export const initialState: LibraryState = {
 };
 
 export const librarySlice = createSlice<LibraryState, SliceCaseReducers<LibraryState>>({
-    name: 'library',
+    name: 'library_old',
     initialState,
     reducers: {
         setLoading: (state, action) => {
@@ -41,25 +40,25 @@ export const librarySlice = createSlice<LibraryState, SliceCaseReducers<LibraryS
 
 export const getLibraryItems = (params: { type: LibraryType[] }) => (dispatch: Dispatch) => {
     dispatch(setLoading(true));
-    Api.texts.getAll(params).then((res: TextItemsResponse) => {
-        dispatch(setItems(res.items));
+    Api.library.getAll(params).then((res: LibraryItem[]) => {
+        dispatch(setItems(res));
         dispatch(setLoading(false));
     });
 };
 
 export const getLibraryItem = (id: number) => (dispatch: Dispatch) => {
     dispatch(setLoading(true));
-    Api.texts.getById(id).then((res: TextItemResponse) => {
-        dispatch(setItem(res.item));
+    Api.library.getById(id).then((res: LibraryItem|null) => {
+        dispatch(setItem(res));
         dispatch(setLoading(false));
     });
 };
 
-export const totalPageSelector = (state: any) => Math.ceil(state.library.items.length / state.library.count);
+export const totalPageSelector = (state: any) => Math.ceil(state.library_old.items.length / state.library_old.count);
 
 export const currentPageItemsSelector = (state: any) =>
-    [...state.library.items].sort((a,b) => b.id < a.id ? -1 : 1)
-        .slice((state.library.page - 1) * state.library.count, state.library.page * state.library.count);
+    [...state.library_old.items].sort((a,b) => b.id < a.id ? -1 : 1)
+        .slice((state.library_old.page - 1) * state.library_old.count, state.library_old.page * state.library_old.count);
 
 export const { setItems, setItem, setPage, setLoading } = librarySlice.actions
 
