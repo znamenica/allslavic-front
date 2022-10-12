@@ -7,10 +7,16 @@ import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import React from "react";
 import {useTranslation} from "next-i18next";
 import {useRouter} from "next/router";
+import {useAppSelector} from "../../hooks";
+import {Button, CardMedia} from "@mui/material";
 
 const NewsItem = ({ item }) => {
     const router = useRouter();
+    const isLoggedIn = useAppSelector(state => state.me.loggedIn);
     const { t} = useTranslation();
+    const onEdit = () => {
+      router.push(`/news/${item.id}/edit`);
+    };
     return item ? (
         <Box sx={{ marginTop: 1 }}>
             <Head>
@@ -29,6 +35,18 @@ const NewsItem = ({ item }) => {
             <Typography variant="h3" gutterBottom component="div">
                 {item.title}
             </Typography>
+            {isLoggedIn && (
+                <Box>
+                    <Button variant="contained" onClick={onEdit}>{t('edit')}</Button>
+                </Box>
+            )}
+            <Box sx={{ width: 200, marginTop: 1 }}>
+                <CardMedia
+                    component="img"
+                    height="200"
+                    image={item.cover_uri}
+                />
+            </Box>
             <div dangerouslySetInnerHTML={{ __html: item.text }} />
         </Box>
     ) : (

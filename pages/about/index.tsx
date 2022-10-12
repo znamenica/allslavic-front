@@ -17,11 +17,17 @@ const About = () => {
               О портале
           </Typography>
           <Typography variant="subtitle1" gutterBottom component="div">
+              Версия 0.3.1 (12.10.2022)
+          </Typography>
+          <Typography variant="body1" gutterBottom component="div">
+              - Добавлено редактирование новостей
+          </Typography>
+          <Typography variant="subtitle1" gutterBottom component="div">
               Версия 0.3 (12.10.2022)
           </Typography>
           <Typography variant="body1" gutterBottom component="div">
               - Добавлена авторизация<br/>
-              - Добавлена страница авторизированного пользователя
+              - Добавлена страница авторизированного пользователя<br/>
               - Добавлен раздел новостей
           </Typography>
           <Typography variant="subtitle1" gutterBottom component="div">
@@ -63,8 +69,8 @@ const About = () => {
           </Typography>
           <Typography variant="body1" gutterBottom component="div">
               - Добавлена клавиатура мс для виндовс<br/>
-              - Добавлен выбор целевой азбуки при использовании транскрибатора
-              - В инструменты вынесено скачивание клавиатуры
+              - Добавлен выбор целевой азбуки при использовании транскрибатора<br/>
+              - В инструменты вынесено скачивание клавиатуры<br/>
               - Исправлены ошибки в аудио-таблице азбуки
           </Typography>
           <Typography variant="subtitle1" gutterBottom component="div">

@@ -123,11 +123,29 @@ const Api = {
             }),
             body: JSON.stringify(news),
         });
+    },
+    edit(id, news, token) {
+        return fetch(`${process.env.NEXT_PUBLIC_API}/news/${id}.json`, {
+            method: "PATCH",
+            headers: new Headers({
+                'Content-Type': 'application/json',
+                'X-Auth-Token': token,
+            }),
+            body: JSON.stringify(news),
+        });
     }
   },
     texts: {
         getAll(params: any): Promise<TextItemsResponse> {
-            return fetch(`${process.env.NEXT_PUBLIC_API}/library.json?count=1&page=1`)
+            const searchParams = new URLSearchParams();
+            if (params.page) {
+                searchParams.set("p", params.page);
+            }
+            if (params.count) {
+                searchParams.set("per", params.count);
+            }
+            searchParams.set("sort", "created_at:desc");
+            return fetch(`${process.env.NEXT_PUBLIC_API}/library.json?${searchParams.toString()}`)
                 .then(res => {
                     if (res.status === 403) {
                         return {

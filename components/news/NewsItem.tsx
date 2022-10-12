@@ -2,6 +2,7 @@ import {Box, Button, Card, CardActionArea, CardActions, CardContent, CardMedia, 
 import {NewsItem} from "../../pages/api/news";
 import {useTranslation} from "next-i18next";
 import DeleteIcon from '@mui/icons-material/Delete';
+import EditIcon from "@mui/icons-material/Edit";
 import Api from "../../pages/api";
 import {useAppDispatch, useAppSelector} from "../../hooks";
 import {getNewsItems} from "../../store/reducers/news";
@@ -16,6 +17,9 @@ const NewsItem = ({ item }: { item: NewsItem }) => {
         const token = localStorage.getItem("access_token");
         Api.news.deleteById(item.id, token);
         dispatch(getNewsItems());
+    };
+    const handlerEdit = () => {
+      router.push(`/news/${item.id}/edit`);
     };
     const goToItem = () => {
         router.push(`/news/${item.id}`);
@@ -47,11 +51,23 @@ const NewsItem = ({ item }: { item: NewsItem }) => {
                 </CardActions>
             </Card>
             {isLoggedIn && (
+                <EditIcon
+                    sx={{
+                        position: 'absolute',
+                        top: '40px',
+                        right: '40px',
+                        cursor: "pointer"
+                    }}
+                    onClick={handlerEdit}
+                />
+            )}
+            {isLoggedIn && (
                 <DeleteIcon
                     sx={{
                         position: 'absolute',
                         top: '40px',
-                        right: '20px',
+                        right: '10px',
+                        cursor: "pointer"
                     }}
                     onClick={handlerDelete}
                 />
