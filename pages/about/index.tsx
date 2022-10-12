@@ -17,6 +17,14 @@ const About = () => {
               О портале
           </Typography>
           <Typography variant="subtitle1" gutterBottom component="div">
+              Версия 0.3 (12.10.2022)
+          </Typography>
+          <Typography variant="body1" gutterBottom component="div">
+              - Добавлена авторизация<br/>
+              - Добавлена страница авторизированного пользователя
+              - Добавлен раздел новостей
+          </Typography>
+          <Typography variant="subtitle1" gutterBottom component="div">
               Версия 0.2.2 (08.05.2022)
           </Typography>
           <Typography variant="body1" gutterBottom component="div">

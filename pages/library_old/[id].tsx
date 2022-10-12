@@ -12,12 +12,16 @@ import {library} from "../api/library";
 import {serverSideTranslations} from "next-i18next/serverSideTranslations";
 import {useTranslation} from "next-i18next";
 import Api from "../api";
+import {useSelector} from "react-redux";
+import {AppState} from "../../store";
+import {LibraryItem} from "../api/library";
 
-const LibraryItem = ({ item }) => {
+const LibraryItem = () => {
     const [transcription, setTranscription] = useState<string|null>(null);
     const router = useRouter();
     const {t } = useTranslation('common');
     const dispatch = useAppDispatch();
+    const item = useSelector<AppState, LibraryItem|null>(store => store.library_old.item);
     useEffect(() => {
         if (router.query.id) {
             dispatch(getLibraryItem(parseInt(router.query.id as string)));
@@ -37,7 +41,7 @@ const LibraryItem = ({ item }) => {
                 gutterBottom
                 component="div"
                 sx={{ cursor: "pointer" }}
-                onClick={() => router.push("/library")}
+                onClick={() => router.push("/library_old")}
             >
                 <ArrowBackIcon/>
             </Typography>
@@ -61,18 +65,17 @@ const LibraryItem = ({ item }) => {
     );
 };
 
-export const getStaticProps = async ({ locale, params }) => {
-    const {item} = await Api.texts.getById(params.id);
-    return ({
-        props: {
-            item,
-            ...await serverSideTranslations(locale, ['common']),
-        },
-    })
-}
+export const getStaticProps = async ({ locale }) => ({
+    props: {
+        ...await serverSideTranslations(locale, ['common']),
+    },
+})
 
 export async function getStaticPaths({ params }) {
-    return { paths: [], fallback: true }
+    return {
+        paths: library.map(e => ({ params: { id: e.id.toString() }})),
+        fallback: true,
+    }
 }
 
 export default LibraryItem;

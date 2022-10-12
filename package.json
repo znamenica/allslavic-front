@@ -13,6 +13,7 @@
     "@reduxjs/toolkit": "^1.8.2",
     "date-fns": "^2.11.1",
     "gray-matter": "^4.0.2",
+    "jodit-react": "^1.3.13",
     "jsondiffpatch": "^0.4.1",
     "next": "latest",
     "next-i18next": "^11.0.0",

@@ -6,7 +6,6 @@ import IconButton from '@mui/material/IconButton';
 import Typography from '@mui/material/Typography';
 import Menu from '@mui/material/Menu';
 import Container from '@mui/material/Container';
-import Avatar from '@mui/material/Avatar';
 import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
 import {useTranslation} from "next-i18next";
@@ -16,12 +15,16 @@ import MenuIcon from '@mui/icons-material/Menu';
 import {useEffect, useRef, useState} from "react";
 import {useRouter} from "next/router";
 import Link from "next/link";
+import LoginIcon from '@mui/icons-material/Login';
+import PersonIcon from '@mui/icons-material/Person';
+import {useAppSelector} from "../hooks";
 
 const settings = ['profile', 'help', 'about'];
 const languages = ['ru', 'en'];
-const pages = ["grammar", "dictionary", "library", "tools", "slavic-circle"];
+const pages = ["news", "grammar", "dictionary", "library", "tools", "slavic-circle"];
 
 const Navigation = () => {
+    const isLoggedIn = useAppSelector(state => state.me.loggedIn);
     const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(null);
     const [showing, setShowing] = useState(false);
     const anchorElUser = useRef<any>(null);
@@ -44,7 +47,15 @@ const Navigation = () => {
             default:
                 router.push(page);
         }
-    }
+    };
+
+    const goToLoginPage = () => {
+        if (isLoggedIn) {
+            router.push("/me");
+        } else {
+            router.push("/login");
+        }
+    };
 
     useEffect(() => {
         setShowing(true);
@@ -194,6 +205,16 @@ const Navigation = () => {
                             ))}
                         </Menu>
                     </Box>
+                    <Box sx={{ flexGrow: 0, marginRight: '10px' }}>
+                        <IconButton
+                            sx={{ p: 0 }}
+                            onClick={goToLoginPage}
+                        >
+                            {isLoggedIn
+                                ? <PersonIcon sx={{ color: 'white'}} />
+                                : <LoginIcon sx={{ color: 'white'}} />}
+                        </IconButton>
+                    </Box>
                     <Box sx={{ flexGrow: 0 }}>
                         <Tooltip title="Open settings">
                             <IconButton
@@ -201,7 +222,7 @@ const Navigation = () => {
                                 onClick={handleOpenUserMenu}
                                 sx={{ p: 0 }}
                             >
-                                <Avatar alt="User" src="/static/images/avatar/2.jpg" />
+                                <MenuIcon sx={{ color: 'white'}} />
                             </IconButton>
                         </Tooltip>
                         <Menu

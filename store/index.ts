@@ -3,6 +3,9 @@ import {createWrapper, HYDRATE} from 'next-redux-wrapper';
 import {ThunkAction} from "redux-thunk";
 import {configureStore, createSlice} from "@reduxjs/toolkit";
 import library from "./reducers/library";
+import library_old from "./reducers/library_old";
+import me from "./reducers/me";
+import news from "./reducers/news";
 import {diff} from "jsondiffpatch";
 
 const extra = createSlice({
@@ -30,6 +33,9 @@ export type AppThunk<ReturnType = void> = ThunkAction<ReturnType, AppState, unkn
 const makeStore = () => configureStore({
     reducer: {
         library,
+        library_old,
+        me,
+        news,
         [extra.name]: extra.reducer,
     },
     devTools: true,

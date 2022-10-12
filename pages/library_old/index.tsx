@@ -1,13 +1,13 @@
 import React, {useEffect, useState} from "react";
 import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
-import {Button, Chip, List, ListItem, ListItemAvatar, ListItemText, Pagination} from "@mui/material";
+import {Chip, List, ListItem, ListItemAvatar, ListItemText, Pagination} from "@mui/material";
 import ScienceIcon from '@mui/icons-material/Science';
 import LyricsIcon from '@mui/icons-material/Lyrics';
 import FeedIcon from '@mui/icons-material/Feed';
 import AutoStoriesIcon from '@mui/icons-material/AutoStories';
 import SchoolIcon from '@mui/icons-material/School';
-import {currentPageItemsSelector, getLibraryItems, setPage, totalPageSelector} from "../../store/reducers/library";
+import {currentPageItemsSelector, getLibraryItems, setPage, totalPageSelector} from "../../store/reducers/library_old";
 import {LibraryType} from "../api/library";
 import {useAppDispatch, useAppSelector} from "../../hooks";
 import {Preferences} from "../../lib/constants";
@@ -71,9 +71,6 @@ const Library = () => {
             <Typography variant="h3" gutterBottom component="div">
                 {t('library')}
             </Typography>
-            <Button onClick={() => router.push('/library_old')}>
-                {t('library_old')}
-            </Button>
             <Box sx={{ display: "flex", flexWrap: "wrap", gap: "12px", marginTop: 1, marginBottom: 1, }}>
                 <Typography variant="subtitle1">
                     {t('categories')}
@@ -111,7 +108,7 @@ const Library = () => {
                             alignItems="flex-start"
                             key={item.id}
                             sx={{ cursor: "pointer" }}
-                            onClick={() => router.push(`/library/${item.id}`)}
+                            onClick={() => router.push(`/library_old/${item.id}`)}
                         >
                             <ListItemAvatar>
                                 <StoryAvatar value={item.type} />
