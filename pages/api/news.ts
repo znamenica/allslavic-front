@@ -16,3 +16,10 @@ export interface NewsItemsResponse {
     items: NewsItem[],
     needAuth: boolean;
 }
+
+export enum NewsTag {
+    INTERSLAVIC_CIRCLE= "interslavic-circle",
+    SCIENCE= "science",
+    SOCIETY= "society",
+    KOLOZOR= "kolozor",
+}

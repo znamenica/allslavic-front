@@ -21,7 +21,7 @@ export const initialState: NewsState = {
     loadAll: false,
 };
 
-export const librarySlice = createSlice<NewsState, SliceCaseReducers<NewsState>>({
+export const newsSlice = createSlice<NewsState, SliceCaseReducers<NewsState>>({
     name: 'news',
     initialState,
     reducers: {
@@ -43,13 +43,15 @@ export const librarySlice = createSlice<NewsState, SliceCaseReducers<NewsState>>
     }
 });
 
-export const getNewsItems = () => (dispatch: Dispatch, getState) => {
+export const getNewsItems = (tagTitles: string[], token: string) => (dispatch: Dispatch, getState) => {
     dispatch(setLoading(true));
-    const {news} = getState();
+    const {news, tags} = getState();
     Api.news.getAll({
         page: news.page,
         count: news.count,
-    }).then((res: NewsItemsResponse) => {
+        tagIds: tagTitles,
+        // tagIds: tags.items.filter(e => !!e.titles.find(t => tagTitles.includes(t.text))).map(e => e.id),
+    }, token).then((res: NewsItemsResponse) => {
         if (news.page > 1) {
             dispatch(setItems([...news.items, ...res.items]));
         } else {
@@ -70,12 +72,12 @@ export const getNewsItem = (id: number) => (dispatch: Dispatch) => {
     });
 };
 
-export const totalPageSelector = (state: any) => Math.ceil(state.library.items.length / state.library.count);
+export const totalPageSelector = (state: any) => Math.ceil(state.news.items.length / state.news.count);
 
 export const currentPageItemsSelector = (state: any) =>
-    [...state.library.items].sort((a,b) => b.id < a.id ? -1 : 1)
-        .slice((state.library.page - 1) * state.library.count, state.library.page * state.library.count);
+    [...state.news.items].sort((a,b) => b.id < a.id ? -1 : 1)
+        .slice((state.news.page - 1) * state.news.count, state.news.page * state.news.count);
 
-export const { setItems, setLoadAll, setItem, setPage, setLoading } = librarySlice.actions
+export const { setItems, setLoadAll, setItem, setPage, setLoading } = newsSlice.actions
 
-export default librarySlice.reducer
+export default newsSlice.reducer

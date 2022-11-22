@@ -17,6 +17,20 @@ const About = () => {
               О портале
           </Typography>
           <Typography variant="subtitle1" gutterBottom component="div">
+              Версия 1.0 (02.11.2022)
+          </Typography>
+          <Typography variant="body1" gutterBottom component="div">
+              - Управление новостями и текстами через теги
+          </Typography>
+          <Typography variant="subtitle1" gutterBottom component="div">
+              Версия 0.3.3 (20.10.2022)
+          </Typography>
+          <Typography variant="body1" gutterBottom component="div">
+              - Добавлено управление тегами в админке пользователя<br/>
+              - Добавлена привязка тегов в новости и тексты<br/>
+              - Исправлена ошибка перехода по верхней навигации изнутри дочерних страниц
+          </Typography>
+          <Typography variant="subtitle1" gutterBottom component="div">
               Версия 0.3.2 (13.10.2022)
           </Typography>
           <Typography variant="body1" gutterBottom component="div">

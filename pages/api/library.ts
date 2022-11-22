@@ -6,6 +6,14 @@ export enum LibraryType {
     STUDYING,
 }
 
+export enum LibraryTag {
+    PROSE= "prose",
+    POEM= "poem",
+    ARTICLE= "article",
+    EDUCATION= "education",
+    NEWS= "news",
+}
+
 export const library = [
     {
         id: 2,

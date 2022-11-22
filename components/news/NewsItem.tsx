@@ -16,7 +16,7 @@ const NewsItem = ({ item }: { item: NewsItem }) => {
     const handlerDelete = () => {
         const token = localStorage.getItem("access_token");
         Api.news.deleteById(item.id, token);
-        dispatch(getNewsItems());
+        dispatch(getNewsItems([], token));
     };
     const handlerEdit = () => {
       router.push(`/news/${item.id}/edit`);

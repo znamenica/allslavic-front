@@ -35,6 +35,15 @@ const Navigation = () => {
     const { t, i18n } = useTranslation('common');
     const router = useRouter();
 
+    const getTranslation = page => {
+        switch (page) {
+            case "news":
+                return "news_pl";
+            default:
+                return page;
+        }
+    }
+
     const handleOpenNavMenu = (event: React.MouseEvent<HTMLElement>) => {
         setAnchorElNav(event.currentTarget);
     };
@@ -45,7 +54,7 @@ const Navigation = () => {
                 window.open(process.env.NEXT_PUBLIC_CIRCLE_API);
                 break;
             default:
-                router.push(page);
+                router.push(`/${page}`);
         }
     };
 
@@ -108,7 +117,7 @@ const Navigation = () => {
                             <NavigationButton
                                 key={page}
                                 onNavigate={() => onNavigate(page)}
-                                label={t(page)}
+                                label={t(getTranslation(page))}
                             />
                         ))}
                     </Box>

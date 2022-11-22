@@ -1,8 +1,24 @@
 import {useTranslation} from "next-i18next";
-import {Box, Button, Container, FormControl, InputLabel, MenuItem, Select, TextField, Typography} from "@mui/material";
+import {
+    Box,
+    Button,
+    Chip,
+    Container,
+    FormControl,
+    InputLabel,
+    MenuItem,
+    Select, Stack,
+    TextField,
+    Typography
+} from "@mui/material";
 import TextEditor from "../ui/TextEditorLoader";
+import {useMemo} from "react";
+import {isLibraryTag, libraryCategoryTagList} from "../../utils/library";
 
 const LibraryItemEdit = ({
+    tagIds,
+    setTagIds,
+    tags,
     name,
     setName,
     content,
@@ -28,6 +44,15 @@ const LibraryItemEdit = ({
     const handlerCategoryChange = (e) => {
         setCategory(e?.target?.value);
     };
+    const onChangeTag = (tag) => {
+        setTagIds([...tagIds, tag.id]);
+    };
+    const onDeleteTag = (tag) => {
+        setTagIds(tagIds.filter(e => e !== tag.id));
+    };
+    const customTags = useMemo(() => {
+        return tags.filter(e => !isLibraryTag(e));
+    }, [tags]);
     return (
         <Container>
             <Box
@@ -46,7 +71,6 @@ const LibraryItemEdit = ({
                 <TextField
                     id="outlined-name"
                     label={t('name')}
-                    sx={{ width: 300 }}
                     variant="outlined"
                     value={name}
                     onChange={handlerNameChange}
@@ -62,7 +86,6 @@ const LibraryItemEdit = ({
                 <TextField
                     id="outlined-cover"
                     label={t('cover')}
-                    sx={{ width: 300 }}
                     variant="outlined"
                     value={cover}
                     onChange={handlerCoverChange}
@@ -76,19 +99,27 @@ const LibraryItemEdit = ({
                         label="Category"
                         onChange={handlerCategoryChange}
                     >
-                        <MenuItem value="">
-                            <em>-</em>
-                        </MenuItem>
-                        <MenuItem value="poems">Стихи</MenuItem>
-                        <MenuItem value="prose">Проза</MenuItem>
-                        <MenuItem value="articles">Статьи</MenuItem>
-                        <MenuItem value="education">Обучение</MenuItem>
+                        {libraryCategoryTagList().map(tagItem => (
+                            <MenuItem value={tagItem}>
+                                {t(tagItem)}
+                            </MenuItem>
+                        ))}
                     </Select>
                 </FormControl>
                 <TextEditor
                     onChange={setContent}
                     defaultContent={content}
                 />
+                <Stack direction="row" spacing={1}>
+                    {customTags.map(tag => (
+                        <Chip label={tag.titles[0]?.text}
+                              color="primary"
+                              variant={tagIds.includes(tag.id) ? undefined : "outlined"}
+                              onClick={() => onChangeTag(tag)}
+                              onDelete={tagIds.includes(tag.id) ? () => onDeleteTag(tag) : undefined}
+                        />
+                    ))}
+                </Stack>
                 <Button
                     variant="outlined"
                     onClick={onSubmit}

@@ -6,6 +6,7 @@ import library from "./reducers/library";
 import library_old from "./reducers/library_old";
 import me from "./reducers/me";
 import news from "./reducers/news";
+import tags from "./reducers/tags";
 import {diff} from "jsondiffpatch";
 
 const extra = createSlice({
@@ -36,6 +37,7 @@ const makeStore = () => configureStore({
         library_old,
         me,
         news,
+        tags,
         [extra.name]: extra.reducer,
     },
     devTools: true,
