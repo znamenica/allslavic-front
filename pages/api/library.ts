@@ -11,6 +11,7 @@ export enum LibraryTag {
     POEM= "poem",
     ARTICLE= "article",
     EDUCATION= "education",
+    NEWS= "news",
 }
 
 export const library = [

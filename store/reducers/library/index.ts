@@ -1,6 +1,6 @@
 import {createSlice, Dispatch} from '@reduxjs/toolkit';
 import Api from "../../../pages/api/index";
-import {LibraryItem, LibraryType} from "../../../pages/api/library";
+import {LibraryItem, LibraryTag, LibraryType} from "../../../pages/api/library";
 import {SliceCaseReducers} from "@reduxjs/toolkit";
 import {TextItem, TextItemResponse, TextItemsResponse} from "../../../pages/api/texts";
 
@@ -39,7 +39,7 @@ export const librarySlice = createSlice<LibraryState, SliceCaseReducers<LibraryS
     }
 });
 
-export const getLibraryItems = (itemTypes?: LibraryType[]) => (dispatch: Dispatch, getState) => {
+export const getLibraryItems = (itemTypes?: LibraryTag[]) => (dispatch: Dispatch, getState) => {
     dispatch(setLoading(true));
     const {library} = getState();
     Api.texts.getAll({

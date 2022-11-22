@@ -8,7 +8,7 @@ import FeedIcon from '@mui/icons-material/Feed';
 import AutoStoriesIcon from '@mui/icons-material/AutoStories';
 import SchoolIcon from '@mui/icons-material/School';
 import {currentPageItemsSelector, getLibraryItems, setPage, totalPageSelector} from "../../store/reducers/library";
-import {LibraryType} from "../api/library";
+import {LibraryTag} from "../api/library";
 import {useAppDispatch, useAppSelector} from "../../hooks";
 import {Preferences} from "../../lib/constants";
 import {useRouter} from "next/router";
@@ -18,18 +18,19 @@ import {useTranslation} from "next-i18next";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
 import Api from "../api";
+import {getTagsItems} from "../../store/reducers/tags";
 
-const StoryAvatar = ({ value }: { value: LibraryType }) => {
+const StoryAvatar = ({ value }: { value: LibraryTag }) => {
     switch (value) {
-        case LibraryType.PROSE:
+        case LibraryTag.PROSE:
             return <AutoStoriesIcon />;
-        case LibraryType.POEM:
+        case LibraryTag.POEM:
             return <LyricsIcon />;
-        case LibraryType.ARTICLE:
+        case LibraryTag.ARTICLE:
             return <ScienceIcon />;
-        case LibraryType.NEWS:
+        case LibraryTag.NEWS:
             return <FeedIcon />;
-        case LibraryType.STUDYING:
+        case LibraryTag.EDUCATION:
             return <SchoolIcon />;
         default:
             return null;
@@ -37,7 +38,7 @@ const StoryAvatar = ({ value }: { value: LibraryType }) => {
 };
 
 const Library = () => {
-    const [itemTypes, setItemTypes] = useState<LibraryType[]>([]);
+    const [itemTypes, setItemTypes] = useState<LibraryTag[]>([]);
     const isLoggedIn = useAppSelector(state => state.me.loggedIn);
     const [transcription, setTranscription] = useState<string|null>(null);
     const router = useRouter();
@@ -45,7 +46,7 @@ const Library = () => {
     const items = useAppSelector(currentPageItemsSelector);
     const totalPage = useAppSelector(totalPageSelector);
     const dispatch = useAppDispatch();
-    const onChipClick = (item: LibraryType) => {
+    const onChipClick = (item: LibraryTag) => {
         if (itemTypes.includes(item)) {
             const items = [...itemTypes].filter(e => e !== item);
             setItemTypes(items);
@@ -75,7 +76,10 @@ const Library = () => {
     useEffect(() => {
         dispatch(getLibraryItems(itemTypes));
     }, [dispatch, itemTypes ]);
-    const getOutlined = (value: LibraryType) => itemTypes.includes(value) ? "filled" : "outlined";
+    useEffect(() => {
+        dispatch(getTagsItems());
+    }, []);
+    const getOutlined = (value: LibraryTag) => itemTypes.includes(value) ? "filled" : "outlined";
     return (
         <Box>
             <Head>
@@ -99,28 +103,28 @@ const Library = () => {
                 </Typography>
                 <Chip
                     label={t('poems')}
-                    variant={getOutlined(LibraryType.POEM)}
-                    onClick={() => onChipClick(LibraryType.POEM)}
+                    variant={getOutlined(LibraryTag.POEM)}
+                    onClick={() => onChipClick(LibraryTag.POEM)}
                 />
                 <Chip
                     label={t('prose')}
-                    variant={getOutlined(LibraryType.PROSE)}
-                    onClick={() => onChipClick(LibraryType.PROSE)}
+                    variant={getOutlined(LibraryTag.PROSE)}
+                    onClick={() => onChipClick(LibraryTag.PROSE)}
                 />
                 <Chip
                     label={t('articles')}
-                    variant={getOutlined(LibraryType.ARTICLE)}
-                    onClick={() => onChipClick(LibraryType.ARTICLE)}
+                    variant={getOutlined(LibraryTag.ARTICLE)}
+                    onClick={() => onChipClick(LibraryTag.ARTICLE)}
                 />
                 <Chip
                     label={t('news')}
-                    variant={getOutlined(LibraryType.NEWS)}
-                    onClick={() => onChipClick(LibraryType.NEWS)}
+                    variant={getOutlined(LibraryTag.NEWS)}
+                    onClick={() => onChipClick(LibraryTag.NEWS)}
                 />
                 <Chip
                     label={t('studying')}
-                    variant={getOutlined(LibraryType.STUDYING)}
-                    onClick={() => onChipClick(LibraryType.STUDYING)}
+                    variant={getOutlined(LibraryTag.EDUCATION)}
+                    onClick={() => onChipClick(LibraryTag.EDUCATION)}
                 />
             </Box>
             <Box>
@@ -133,7 +137,7 @@ const Library = () => {
                             onClick={() => router.push(`/library/${item.id}`)}
                         >
                             <ListItemAvatar>
-                                <StoryAvatar value={item.type} />
+                                <StoryAvatar value={item.category} />
                             </ListItemAvatar>
                             <ListItemText
                                 primary={item.title}
