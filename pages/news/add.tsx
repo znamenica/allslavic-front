@@ -1,28 +1,44 @@
 import {serverSideTranslations} from "next-i18next/serverSideTranslations";
-import {useState} from "react";
+import {useEffect, useState} from "react";
 import Error from "next/error";
-import {useAppSelector} from "../../hooks";
+import {useAppDispatch, useAppSelector} from "../../hooks";
 import Api from "../api";
 import {useRouter} from "next/router";
 import NewsEditItem from "../../components/news/NewsEditItem";
+import {getTagsItems} from "../../store/reducers/tags";
 
 const Add = () => {
     const isLoggedIn = useAppSelector(state => state.me.loggedIn);
     const myId = useAppSelector(state => state.me.item?.id);
+    const tags = useAppSelector(state => state.tags.items);
     const [name, setName] = useState("");
     const [description, setDescription] = useState("");
     const [category, setCategory] = useState("");
     const [cover, setCover] = useState("");
     const [content, setContent] = useState("");
+    const [tagIds, setTagIds] = useState([]);
     const router = useRouter();
+    const dispatch = useAppDispatch();
     const onSubmit = () => {
         const token = localStorage.getItem("access_token");
+        const mainTag = tags.find(e => e.titles?.find(e => e.text === category));
         Api.news.create({
-            title: name, text: content, author_id: myId, abstract: description, cover_uri: cover,
+            novelty: {
+                title: name,
+                text: content,
+                author_id: myId,
+                abstract: description,
+                cover_uri: cover,
+                tags: mainTag ? [category] : [],
+            },
         }, token).then(() => {
             router.push('/news');
         });
     };
+
+    useEffect(() => {
+        dispatch(getTagsItems());
+    }, []);
 
     if (!isLoggedIn) {
         return <Error statusCode={404} />
@@ -30,6 +46,9 @@ const Add = () => {
 
     return <NewsEditItem
         name={name}
+        tagIds={tagIds}
+        setTagIds={setTagIds}
+        tags={tags}
         setName={setName}
         description={description}
         setDescription={setDescription}

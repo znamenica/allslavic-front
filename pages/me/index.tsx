@@ -2,7 +2,6 @@ import {Box, Button, Container, Input, Typography} from "@mui/material";
 import {useAppDispatch, useAppSelector} from "../../hooks";
 import LogoutIcon from '@mui/icons-material/Logout';
 import Api from "../api";
-import {useDispatch} from "react-redux";
 import {getMe, setLoggedIn} from "../../store/reducers/me";
 import {serverSideTranslations} from "next-i18next/serverSideTranslations";
 import Error from 'next/error'
@@ -10,6 +9,7 @@ import {useRouter} from "next/router";
 import {useTranslation} from "next-i18next";
 import {useEffect, useState} from "react";
 import {USER_KIND} from "../api/users";
+import Link from "next/link";
 
 const Me = () => {
     const isLoggedIn = useAppSelector(state => state.me.loggedIn);
@@ -106,6 +106,21 @@ const Me = () => {
             >
                 <Box>
                     Привет, {nickName || 'пользователь'}!
+                    <Button>
+                        <Link href="/news/add">
+                            {t('add_news')}
+                        </Link>
+                    </Button>
+                    <Button>
+                        <Link  href="/library/add">
+                            {t('add_text')}
+                        </Link>
+                    </Button>
+                    <Button>
+                        <Link href="/tags">
+                            {t('manage_tags')}
+                        </Link>
+                    </Button>
                 </Box>
                 <Box onClick={onLogout}>
                     <LogoutIcon />

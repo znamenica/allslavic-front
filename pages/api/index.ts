@@ -1,6 +1,7 @@
 import {library, LibraryItem, LibraryType} from "./library";
 import {NewsItemResponse, NewsItemsResponse} from "./news";
 import {TextItemResponse, TextItemsResponse} from "./texts";
+import {TagsItemsResponse} from "./tags";
 
 const Api = {
   library: {
@@ -46,33 +47,79 @@ const Api = {
       },
   },
   tags: {
-      getAll(token): Promise<NewsItemsResponse> {
-          return fetch(`${process.env.NEXT_PUBLIC_API}/t.json?p=1&per=10`, {
-              headers: new Headers({ 'X-Auth-Token': token }),
-          })
+      getAll(params): Promise<TagsItemsResponse> {
+          const searchParams = new URLSearchParams();
+          if (params.page) {
+              searchParams.set("p", params.page);
+          }
+          if (params.count) {
+              searchParams.set("per", params.count);
+          }
+          searchParams.set("sort", "created_at:desc");
+          return fetch(`/api/tags?${searchParams.toString()}`)
               .then(res => {
-                  if (res.status === 403) {
-                      return {
-                          items: [],
-                          needAuth: true,
-                      };
-                  }
                   return res.json()
               })
               .then(data => ({
                   items: data.list,
-                  needAuth: false,
               }));
+      },
+      getTitleList(): Promise<any> {
+          const searchParams = new URLSearchParams({
+              dictumable_type: 'Tag',
+          });
+          return fetch(`${process.env.NEXT_PUBLIC_API}/s.json?${searchParams.toString()}`)
+              .then(res => {
+                  return res.json()
+              })
+              .then(data => ({
+                  items: data.list,
+              }));
+      },
+      getAllOuter(params): Promise<TagsItemsResponse> {
+          const searchParams = new URLSearchParams(params);
+          return fetch(`${process.env.NEXT_PUBLIC_API}/t.json?${searchParams.toString()}`)
+              .then(res => {
+                  return res.json()
+              })
+              .then(data => ({
+                  items: data.list,
+              }));
+      },
+      create(tag, token) {
+          return fetch(`${process.env.NEXT_PUBLIC_API}/t.json`, {
+              method: "POST",
+              headers: new Headers({
+                  'Content-Type': 'application/json',
+                  'X-Auth-Token': token,
+              }),
+              body: JSON.stringify(tag),
+          });
+      },
+      deleteById(id: number, token) {
+          return fetch(`${process.env.NEXT_PUBLIC_API}/t/${id}.json`, {
+              method: 'DELETE',
+              headers: new Headers({
+                  'X-Auth-Token': token,
+              }),
+          });
       },
   },
   news: {
-    getAll(params: any): Promise<NewsItemsResponse> {
+    getAll(params: any, token: string): Promise<NewsItemsResponse> {
         const searchParams = new URLSearchParams();
         if (params.page) {
-            searchParams.set("p", params.page);
+            searchParams.append("p", params.page);
         }
         if (params.count) {
-            searchParams.set("per", params.count);
+            searchParams.append("per", params.count);
+        }
+        if (params.tagIds?.length > 0) {
+            params.tagIds.forEach((tag) => {
+                searchParams.append(`by_tags[]`, token ? tag : `${tag},!interslavic-circle`);
+            });
+        } else if (!token) {
+            searchParams.append(`by_tags[]`, `!interslavic-circle`);
         }
         searchParams.set("sort", "created_at:desc");
         return fetch(`${process.env.NEXT_PUBLIC_API}/news.json?${searchParams.toString()}`)
@@ -143,6 +190,11 @@ const Api = {
             }
             if (params.count) {
                 searchParams.set("per", params.count);
+            }
+            if (params.tagIds?.length > 0) {
+                params.tagIds.forEach((tag) => {
+                    searchParams.append(`by_tags[]`, tag);
+                });
             }
             searchParams.set("sort", "created_at:desc");
             return fetch(`${process.env.NEXT_PUBLIC_API}/library.json?${searchParams.toString()}`)

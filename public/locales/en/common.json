@@ -69,5 +69,8 @@
   "add_news": "Add news",
   "cover": "Cover",
   "add_text": "Add text",
-  "description": "Description"
+  "description": "Description",
+  "news_pl": "News",
+  "kolozor": "Kolozor",
+  "read_all": "Read all"
 }

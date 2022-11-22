@@ -1,9 +1,25 @@
-import {Box, Button, Container, FormControl, InputLabel, MenuItem, Select, TextField, Typography} from "@mui/material";
+import {
+    Box,
+    Button, Chip,
+    Container,
+    FormControl,
+    InputLabel,
+    MenuItem,
+    Select,
+    Stack,
+    TextField,
+    Typography
+} from "@mui/material";
 import TextEditor from "../ui/TextEditorLoader";
 import {useTranslation} from "next-i18next";
+import {useMemo} from "react";
+import {isNewsTag, newsCategoryTagList} from "../../utils/news";
 
 const NewsEditItem = ({
     name,
+    tags,
+    tagIds,
+    setTagIds,
     setName,
     content,
     setContent,
@@ -28,6 +44,15 @@ const NewsEditItem = ({
     const handlerCategoryChange = (e) => {
         setCategory(e?.target?.value);
     };
+    const onChangeTag = (tag) => {
+      setTagIds([...tagIds, tag.id]);
+    };
+    const onDeleteTag = (tag) => {
+      setTagIds(tagIds.filter(e => e !== tag.id));
+    };
+    const customTags = useMemo(() => {
+        return tags.filter(e => !isNewsTag(e));
+    }, [tags]);
     return (
       <Container>
           <Box
@@ -46,7 +71,6 @@ const NewsEditItem = ({
               <TextField
                   id="outlined-name"
                   label={t('name')}
-                  sx={{ width: 300 }}
                   variant="outlined"
                   value={name}
                   onChange={handlerNameChange}
@@ -62,7 +86,6 @@ const NewsEditItem = ({
               <TextField
                   id="outlined-cover"
                   label={t('cover')}
-                  sx={{ width: 300 }}
                   variant="outlined"
                   value={cover}
                   onChange={handlerCoverChange}
@@ -76,20 +99,27 @@ const NewsEditItem = ({
                       label="Category"
                       onChange={handlerCategoryChange}
                   >
-                      <MenuItem value="">
-                          <em>-</em>
-                      </MenuItem>
-                      <MenuItem value="ms_krug">
-                          <strong>Межсловѣнскы крѫг</strong>
-                      </MenuItem>
-                      <MenuItem value="science">Наука</MenuItem>
-                      <MenuItem value="society">Общество</MenuItem>
+                      {newsCategoryTagList().map(tagItem => (
+                          <MenuItem value={tagItem}>
+                              {t(tagItem)}
+                          </MenuItem>
+                      ))}
                   </Select>
               </FormControl>
               <TextEditor
                   onChange={setContent}
                   defaultContent={content}
               />
+              <Stack direction="row" spacing={1}>
+                  {customTags.map(tag => (
+                      <Chip label={tag.titles[0]?.text}
+                            color="primary"
+                            variant={tagIds.includes(tag.id) ? undefined : "outlined"}
+                            onClick={() => onChangeTag(tag)}
+                            onDelete={tagIds.includes(tag.id) ? () => onDeleteTag(tag) : undefined}
+                      />
+                  ))}
+              </Stack>
               <Button
                   variant="outlined"
                   onClick={onSubmit}

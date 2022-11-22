@@ -45,6 +45,7 @@ export const getLibraryItems = (itemTypes?: LibraryType[]) => (dispatch: Dispatc
     Api.texts.getAll({
         page: library.page,
         count: library.count,
+        tagIds: itemTypes,
     }).then((res: TextItemsResponse) => {
         dispatch(setItems(res.items));
         dispatch(setLoading(false));
